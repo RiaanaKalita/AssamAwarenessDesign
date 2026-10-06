@@ -4,119 +4,306 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tide Turn - Flood Awareness & Safety</title>
-    <!-- Tailwind CSS for layout structure -->
-    <script src="https://tailwindcss.com"></script>
-    <!-- Google Fonts for accurate styling matching mockups -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Nunito:wght@400;600;700&family=Varela+Round&display=swap" rel="stylesheet">
     <style>
+        /* CSS RESET & VARIABLES MATCHING YOUR CANVA PALETTE */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         body {
             font-family: 'Nunito', sans-serif;
             background-color: #e2f1f5;
+            color: #333333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        .font-title {
+        h1, h2, h3, h4, .font-title {
             font-family: 'Varela Round', sans-serif;
         }
-        /* Custom wave pattern decorations matching sketches */
-        .wave-bg {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,25.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,42.4V0Z' fill='%232b5c8f' opacity='.15'%3E%3C/path%3E%3Cpath d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,104.5,23.85,32,13.75,62.3,28,95.51,37.19,65.73,18.14,133,5.13,197.5-16.7,53.33-18,105.75-43,165.75-41,34.77,1.15,68.28,11.39,100.46,24.5,31.75,12.92,62.54,27,95.7,36,30.3,8.27,62,11.45,93.41,7.21V0Z' fill='%232b5c8f' opacity='.25'%3E%3C/path%3E%3C/svg%3E");
-            background-size: cover;
-            background-repeat: repeat-x;
+
+        /* DYNAMIC WAVE PATTERN BORDERS FROM SKETCHES */
+        .wave-decoration {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,25.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,42.4V0Z' fill='%232b5c8f'/%3E%3C/svg%3E");
+            background-size: 100% 100%;
+            height: 40px;
+            width: 100%;
+        }
+        .wave-decoration-bottom {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,25.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,42.4V0Z' fill='%232b5c8f'/%3E%3C/svg%3E");
+            background-size: 100% 100%;
+            height: 50px;
+            width: 100%;
+            transform: scaleY(-1);
+            margin-top: auto;
+        }
+
+        /* RIGID LAYOUT ARCHITECTURE */
+        .app-container {
+            max-w: 1280px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            flex-grow: 1;
+        }
+        .grid-row {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        /* NAVIGATION BAR */
+        .custom-header {
+            background-color: #2b5c8f;
+            color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+        }
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #ffffff;
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 8px 4px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-btn:hover {
+            color: #bbdefb;
         }
         .active-tab {
             border-bottom: 4px solid #ffffff;
-            font-weight: bold;
+            font-weight: 700;
         }
-    </style>
-</head>
-<body class="flex flex-col min-h-screen">
 
-    <!-- NAVIGATION HEADER -->
-    <header class="bg-[#2b5c8f] text-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
-                <!-- Origami boat icon from mockup -->
-                <svg class="w-8 h-8 text-blue-200 fill-current" viewBox="0 0 24 24">
-                    <path d="M12 2L2 19h8l2-4 2 4h8L12 2zm0 4.84L18.36 17h-3.72l-2.64-5.28L9.36 17H5.64L12 6.84z"/>
-                </svg>
-                <span class="font-title text-xl tracking-wider uppercase">Tide Turn</span>
-            </div>
-            <nav class="flex space-x-8 text-lg">
-                <button id="tab-home" onclick="switchTab('home')" class="py-2 px-1 active-tab transition duration-200 hover:text-blue-200">Home</button>
-                <button id="tab-info" onclick="switchTab('info')" class="py-2 px-1 transition duration-200 hover:text-blue-200">Information</button>
-                <button id="tab-safety" onclick="switchTab('safety')" class="py-2 px-1 transition duration-200 hover:text-blue-200">Safety</button>
-            </nav>
-        </div>
-    </header>
+        /* CANVA PAGE 1 HERO SECTION */
+        .hero-banner {
+            background: linear-gradient(rgba(43, 92, 143, 0.4), rgba(43, 92, 143, 0.4)), url('https://unsplash.com') center/cover;
+            border-radius: 16px;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            padding: 0 48px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .hero-title {
+            color: #ffffff;
+            font-size: 30px;
+            line-height: 1.3;
+            margin-bottom: 16px;
+        }
+        .donate-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ea8d83;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 700;
+            width: 120px;
+            height: 44px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background 0.2s;
+        }
+        .donate-btn:hover {
+            background-color: #e37b70;
+        }
+        .hero-badge {
+            position: absolute;
+            right: 24px;
+            bottom: 24px;
+            background-color: #83bfa7;
+            color: #1a202c;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
 
-    <!-- MAIN VIEW CONTAINER -->
-    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6">
+        /* CANVA INTERACTIVE FOUR-CARD HUB */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        .hub-card {
+            background-color: #9cd4e4;
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .hub-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .card-icon-frame {
+            width: 64px;
+            height: 64px;
+            background-color: rgba(255,255,255,0.4);
+            border-full: 50%;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+        .card-divider {
+            width: 64px;
+            height: 4px;
+            background-color: #ea8d83;
+            border-radius: 2px;
+            margin: 12px 0;
+        }
+        .card-pill {
+            font-size: 12px;
+            background-color: rgba(255,255,255,0.6);
+            padding: 4px 12px;
+            border-radius: 12px;
+            color: #4a5568;
+            font-weight: 600;
+        }
 
-        <!-- ================= HOME PAGE SECTION ================= -->
-        <section id="view-home" class="space-y-8">
-            <!-- Hero Section -->
-            <div class="relative bg-gradient-to-r from-slate-700 to-slate-500 rounded-2xl overflow-hidden h-72 md:h-96 flex items-center px-8 md:px-16 shadow-lg">
-                <div class="absolute inset-0 bg-cover bg-center mix-blend-overlay opacity-40" style="background-image: url('https://unsplash.com');"></div>
-                <div class="relative z-10 max-w-xl text-white">
-                    <h1 class="font-title text-3xl md:text-5xl font-bold leading-tight mb-4" style="font-size: 30px;">Safer Communities<br>Stronger Tomorrow</h1>
-                    <a href="https://rapidresponse.org.in" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center bg-[#ea8d83] hover:bg-[#e37b70] text-white font-bold rounded-lg shadow transition transform hover:-translate-y-0.5" style="width: 120px; height: 44px;">
-                        DONATE
-                    </a>
-                </div>
-                <div class="absolute right-6 bottom-6 bg-[#83bfa7] text-slate-900 px-4 py-2 rounded-xl text-sm font-semibold tracking-wide shadow-md hidden md:block">
-                    Be aware. Be prepared. Be safe.
-                </div>
-            </div>
+        /* PROFILE SECTION WRAPPER */
+        .about-block {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border: 1px solid #edf2f7;
+            max-width: 650px;
+            margin-left: auto;
+            display: flex;
+            gap: 16px;
+        }
+        .avatar-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #2b5c8f;
+            flex-shrink: 0;
+        }
 
-            <!-- Main Interactive Navigation Cards -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Card 1 -->
-                <div onclick="switchTab('safety')" class="bg-[#9cd4e4] rounded-2xl p-6 text-center shadow cursor-pointer transition transform hover:scale-105 flex flex-col items-center justify-between">
-                    <div class="w-16 h-16 bg-white/50 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-10 h-10 text-[#2b5c8f]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
-                    </div>
-                    <h3 class="font-title font-bold text-lg mb-2 text-slate-800">Flood tracker</h3>
-                    <div class="w-16 h-1 bg-[#ea8d83] rounded mb-3"></div>
-                    <span class="text-xs bg-white/60 px-3 py-1 rounded-full text-slate-700 font-medium">Explore Map</span>
-                </div>
+        /* RE-LAYOUT GRAPH VIEW (CANVA PAGE 3 STRUCTURAL SCHEMES) */
+        .quiz-panel {
+            background-color: #78b3c6;
+            border-radius: 16px;
+            padding: 24px;
+            color: #ffffff;
+        }
+        .quiz-pill-header {
+            display: inline-block;
+            background-color: #ea8d83;
+            padding: 6px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        .quiz-option {
+            display: flex;
+            align-items: start;
+            gap: 12px;
+            padding: 10px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .quiz-option:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        .quiz-submit {
+            width: 100%;
+            background-color: #ea8d83;
+            border: none;
+            color: #ffffff;
+            font-weight: 700;
+            padding: 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 16px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .quiz-submit:hover {
+            background-color: #e37b70;
+        }
 
-                <!-- Card 2 -->
-                <div onclick="switchTab('info')" class="bg-[#9cd4e4] rounded-2xl p-6 text-center shadow cursor-pointer transition transform hover:scale-105 flex flex-col items-center justify-between">
-                    <div class="w-16 h-16 bg-white/50 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-10 h-10 text-[#2b5c8f]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    </div>
-                    <h3 class="font-title font-bold text-lg mb-2 text-slate-800">Info & Trends</h3>
-                    <div class="w-16 h-1 bg-[#ea8d83] rounded mb-3"></div>
-                    <span class="text-xs bg-white/60 px-3 py-1 rounded-full text-slate-700 font-medium">View Analysis</span>
-                </div>
+        /* DATA CHART ELEMENTS */
+        .chart-box {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border: 1px solid #edf2f7;
+        }
+        .donut-simulation {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: conic-gradient(#4a6b82 0% 55%, #9cd4e4 55% 80%, #a2d4c0 80% 95%, #ea8d83 95% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+        .donut-center {
+            width: 110px;
+            height: 110px;
+            background-color: #ffffff;
+            border-radius: 50%;
+        }
 
-                <!-- Card 3 -->
-                <div onclick="switchTab('info')" class="bg-[#9cd4e4] rounded-2xl p-6 text-center shadow cursor-pointer transition transform hover:scale-105 flex flex-col items-center justify-between">
-                    <div class="w-16 h-16 bg-white/50 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-10 h-10 text-[#2b5c8f]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16.01H9"></path></svg>
-                    </div>
-                    <h3 class="font-title font-bold text-lg mb-2 text-slate-800">Quizzes</h3>
-                    <div class="w-16 h-1 bg-[#ea8d83] rounded mb-3"></div>
-                    <span class="text-xs bg-white/60 px-3 py-1 rounded-full text-slate-700 font-medium">Test Knowledge</span>
-                </div>
-
-                <!-- Card 4 -->
-                <div onclick="switchTab('safety')" class="bg-[#9cd4e4] rounded-2xl p-6 text-center shadow cursor-pointer transition transform hover:scale-105 flex flex-col items-center justify-between">
-                    <div class="w-16 h-16 bg-white/50 rounded-full flex items-center justify-center mb-4">
-                        <svg class="w-10 h-10 text-[#2b5c8f]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                    </div>
-                    <h3 class="font-title font-bold text-lg mb-2 text-slate-800">Get help</h3>
-                    <div class="w-16 h-1 bg-[#ea8d83] rounded mb-3"></div>
-                    <span class="text-xs bg-white/60 px-3 py-1 rounded-full text-slate-700 font-medium">Emergency Hub</span>
-                </div>
-            </div>
-
-            <!-- About Us Block -->
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 max-w-2xl ml-auto">
-                <div class="flex items-start space-x-4">
-                    <div class="w-16 h-16 rounded-full bg-slate-200 flex-shrink-0 flex items-center justify-center overflow-hidden border-2 border-[#2b5c8f]">
-                        <svg class="w-10 h-10 text-slate-400" fill="currentColor" viewBox="0 0 24 24"><path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-                    </div>
-                    <div class="flex-grow">
-                        <h4 class="font-title font-bold text-lg text-slate-800">About us</h4>
+        /* BAR CHART BLOCK */
+        .bar-container {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 144px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-top: 16px;
