@@ -3,307 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tide Turn - Flood Awareness & Safety</title>
+    <title>Tide Turn - Home</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Nunito:wght@400;600;700&family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Nunito:wght@600;700&family=Varela+Round&display=swap" rel="stylesheet">
     <style>
-        /* CSS RESET & VARIABLES MATCHING YOUR CANVA PALETTE */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: 'Nunito', sans-serif;
-            background-color: #e2f1f5;
-            color: #333333;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        h1, h2, h3, h4, .font-title {
-            font-family: 'Varela Round', sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Nunito', sans-serif; background: #e2f1f5; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
+        
+        /* NAVBAR MATCHING SKETCHES */
+        header { background: #2b5c8f; color: #fff; padding: 14px 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .nav-box { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 8px; font-family: 'Varela Round'; font-size: 22px; font-weight: 700; letter-spacing: 0.5px; }
+        .nav-links a { color: #fff; text-decoration: none; font-size: 16px; padding: 8px 16px; font-weight: 700; border-radius: 4px; transition: background 0.2s; }
+        .nav-links a:hover { background: rgba(255,255,255,0.1); }
+        .active-tab { background: #fff; color: #2b5c8f !important; }
 
-        /* DYNAMIC WAVE PATTERN BORDERS FROM SKETCHES */
-        .wave-decoration {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,25.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,42.4V0Z' fill='%232b5c8f'/%3E%3C/svg%3E");
-            background-size: 100% 100%;
-            height: 40px;
-            width: 100%;
-        }
-        .wave-decoration-bottom {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,25.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,42.4V0Z' fill='%232b5c8f'/%3E%3C/svg%3E");
-            background-size: 100% 100%;
-            height: 50px;
-            width: 100%;
-            transform: scaleY(-1);
-            margin-top: auto;
-        }
+        /* HERO AREA */
+        main { max-width: 1100px; width: 100%; margin: 0 auto; padding: 24px 20px; flex-grow: 1; }
+        .hero { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://unsplash.com') center/cover; height: 260px; border-radius: 16px; display: flex; align-items: center; padding: 40px; color: #fff; position: relative; margin-bottom: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .hero h1 { font-family: 'Varela Round'; font-size: 30px; line-height: 1.3; margin-bottom: 14px; }
+        .donate-btn { background: #ea8d83; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; display: inline-block; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background 0.2s; }
+        .donate-btn:hover { background: #e37b70; }
+        .hero-badge { position: absolute; right: 24px; bottom: 24px; background: #83bfa7; color: #1a202c; padding: 6px 14px; border-radius: 10px; font-size: 13px; font-weight: 600; }
 
-        /* RIGID LAYOUT ARCHITECTURE */
-        .app-container {
-            max-w: 1280px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-            flex-grow: 1;
-        }
-        .grid-row {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 24px;
-            margin-bottom: 30px;
-        }
+        /* NAVIGATION SECTIONS */
+        .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+        .card { background: #9cd4e4; padding: 24px; text-align: center; border-radius: 16px; text-decoration: none; color: #2d3748; font-weight: 700; font-size: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 140px; }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .card-divider { width: 40px; height: 4px; background: #ea8d83; border-radius: 2px; margin: 10px 0; }
+        .card-pill { font-size: 11px; background: rgba(255,255,255,0.6); padding: 4px 10px; border-radius: 10px; font-weight: 700; color: #4a5568; }
 
-        /* NAVIGATION BAR */
-        .custom-header {
-            background-color: #2b5c8f;
-            color: #ffffff;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        .nav-wrapper {
-            max-width: 1280px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 24px;
-        }
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            text-decoration: none;
-            color: #ffffff;
-        }
-        .nav-links {
-            display: flex;
-            gap: 32px;
-        }
-        .nav-btn {
-            background: none;
-            border: none;
-            color: #ffffff;
-            font-size: 18px;
-            cursor: pointer;
-            padding: 8px 4px;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .nav-btn:hover {
-            color: #bbdefb;
-        }
-        .active-tab {
-            border-bottom: 4px solid #ffffff;
-            font-weight: 700;
-        }
+        /* ABOUT COMPONENT */
+        .about-section { background: #fff; padding: 24px; border-radius: 16px; border: 1px solid #edf2f7; max-width: 600px; margin-left: auto; display: flex; gap: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .avatar { width: 52px; height: 52px; border-radius: 50%; background: #e2e8f0; display: flex; align-items: center; justify-content: center; border: 2px solid #2b5c8f; flex-shrink: 0; }
 
-        /* CANVA PAGE 1 HERO SECTION */
-        .hero-banner {
-            background: linear-gradient(rgba(43, 92, 143, 0.4), rgba(43, 92, 143, 0.4)), url('https://unsplash.com') center/cover;
-            border-radius: 16px;
-            height: 320px;
-            display: flex;
-            align-items: center;
-            padding: 0 48px;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-        .hero-title {
-            color: #ffffff;
-            font-size: 30px;
-            line-height: 1.3;
-            margin-bottom: 16px;
-        }
-        .donate-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #ea8d83;
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 700;
-            width: 120px;
-            height: 44px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: background 0.2s;
-        }
-        .donate-btn:hover {
-            background-color: #e37b70;
-        }
-        .hero-badge {
-            position: absolute;
-            right: 24px;
-            bottom: 24px;
-            background-color: #83bfa7;
-            color: #1a202c;
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
+        /* DECORATIVE FOOTER WAVES */
+        .wave-bar { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://w3.org' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47.79,25.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,42.4V0Z' fill='%232b5c8f'/%3E%3C/svg%3E"); background-size: 100% 100%; height: 44px; width: 100%; transform: scaleY(-1); margin-top: auto; }
 
-        /* CANVA INTERACTIVE FOUR-CARD HUB */
-        .cards-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin-bottom: 40px;
-        }
-        .hub-card {
-            background-color: #9cd4e4;
-            border-radius: 16px;
-            padding: 24px;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .hub-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-        }
-        .card-icon-frame {
-            width: 64px;
-            height: 64px;
-            background-color: rgba(255,255,255,0.4);
-            border-full: 50%;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 16px;
-        }
-        .card-divider {
-            width: 64px;
-            height: 4px;
-            background-color: #ea8d83;
-            border-radius: 2px;
-            margin: 12px 0;
-        }
-        .card-pill {
-            font-size: 12px;
-            background-color: rgba(255,255,255,0.6);
-            padding: 4px 12px;
-            border-radius: 12px;
-            color: #4a5568;
-            font-weight: 600;
-        }
+        @media(max-width: 850px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media(max-width: 550px) { .card-grid { grid-template-columns: 1fr; } .nav-box { flex-direction: column; gap: 12px; } }
+    </style>
+</head>
+<body>
 
-        /* PROFILE SECTION WRAPPER */
-        .about-block {
-            background-color: #ffffff;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            border: 1px solid #edf2f7;
-            max-width: 650px;
-            margin-left: auto;
-            display: flex;
-            gap: 16px;
-        }
-        .avatar-circle {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background-color: #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #2b5c8f;
-            flex-shrink: 0;
-        }
+    <header>
+        <div class="nav-box">
+            <div class="logo-area">
+                <svg style="width:26px; height:26px; fill:#ffffff;" viewBox="0 0 24 24"><path d="M12 2L2 19h8l2-4 2 4h8L12 2zm0 4.84L18.36 17h-3.72l-2.64-5.28L9.36 17H5.64L12 6.84z"/></svg>
+                <span>Tide Turn</span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html" class="active-tab">Home</a>
+                <a href="info.html">Information</a>
+                <a href="safety.html">Safety</a>
+            </nav>
+        </div>
+    </header>
 
-        /* RE-LAYOUT GRAPH VIEW (CANVA PAGE 3 STRUCTURAL SCHEMES) */
-        .quiz-panel {
-            background-color: #78b3c6;
-            border-radius: 16px;
-            padding: 24px;
-            color: #ffffff;
-        }
-        .quiz-pill-header {
-            display: inline-block;
-            background-color: #ea8d83;
-            padding: 6px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-        .quiz-option {
-            display: flex;
-            align-items: start;
-            gap: 12px;
-            padding: 10px;
-            background-color: rgba(255,255,255,0.1);
-            border-radius: 12px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .quiz-option:hover {
-            background-color: rgba(255,255,255,0.2);
-        }
-        .quiz-submit {
-            width: 100%;
-            background-color: #ea8d83;
-            border: none;
-            color: #ffffff;
-            font-weight: 700;
-            padding: 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            margin-top: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .quiz-submit:hover {
-            background-color: #e37b70;
-        }
+    <main>
+        <div class="hero">
+            <div>
+                <h1>Safer Communities<br>Stronger Tomorrow</h1>
+                <a href="https://rapidresponse.org.in" target="_blank" rel="noopener noreferrer" class="donate-btn">DONATE</a>
+            </div>
+            <div class="hero-badge">Be aware. Be prepared. Be safe.</div>
+        </div>
 
-        /* DATA CHART ELEMENTS */
-        .chart-box {
-            background-color: #ffffff;
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            border: 1px solid #edf2f7;
-        }
-        .donut-simulation {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: conic-gradient(#4a6b82 0% 55%, #9cd4e4 55% 80%, #a2d4c0 80% 95%, #ea8d83 95% 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 16px;
-            position: relative;
-        }
-        .donut-center {
-            width: 110px;
-            height: 110px;
-            background-color: #ffffff;
-            border-radius: 50%;
-        }
+        <div class="card-grid">
+            <a href="safety.html" class="card">
+                <span>Flood tracker</span>
+                <div class="card-divider"></div>
+                <span class="card-pill">Explore Map</span>
+            </a>
+            <a href="info.html" class="card">
+                <span>Info & Trends</span>
+                <div class="card-divider"></div>
+                <span class="card-pill">View Analysis</span>
+            </a>
+            <a href="info.html" class="card">
+                <span>Quizzes</span>
+                <div class="card-divider"></div>
+                <span class="card-pill">Test Knowledge</span>
+            </a>
+            <a href="safety.html" class="card">
+                <span>Get help</span>
+                <div class="card-divider"></div>
+                <span class="card-pill">Emergency Hub</span>
+            </a>
+        </div>
 
-        /* BAR CHART BLOCK */
-        .bar-container {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
-            height: 144px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-top: 16px;
+        <div class="about-section">
+            <div class="avatar">
+                <svg width="24" height="24" fill="#a0aec0" viewBox="0 0 24 24"><path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            </div>
+            <div>
+                <h4 style="font-family:'Varela Round'; color:#2d3748; margin-bottom:4px;">About us</h4>
+                <p style="font-size: 14px; color:#4a5568; line-height: 1.5;">I am Riaana from Assam, and therefore I deeply empathize with the intense challenges communities face during seasonal flooding. Growing up alongside the Brahmaputra river ecosystem highlights the urgent need for widespread education and early structural response options. Tide Turn was built to put actionable information directly into your hands.</p>
+            </div>
+        </div>
+    </main>
+
+    <div class="wave-bar"></div>
+
+</body>
+</html>
