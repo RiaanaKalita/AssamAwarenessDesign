@@ -1,8 +1,4 @@
 
-/* FLOODWISE ASSAM — INTERACTIVE FEATURES */
-
-
-/* 1. FLOOD SAFETY GUIDE */
 
 const safetyGuides = {
   before: [
@@ -18,7 +14,7 @@ const safetyGuides = {
   during: [
     ["01", "Follow evacuation instructions", "Move to the designated safe place when authorities tell you to leave."],
     ["02", "Stay away from floodwater", "Do not walk, swim or drive through floodwater."],
-    ["03", "Move to safer ground", "Follow official instructions to reach a safer location if water rises."],
+    ["03", "Move to safer ground", "If water rises, follow official instructions to reach a safer location."],
     ["04", "Avoid electrical hazards", "Keep away from fallen power lines and electrical equipment exposed to water."],
     ["05", "Keep informed", "Listen to official alerts and updates when available."],
     ["06", "Keep your family together", "Follow your family's emergency plan and stay with a trusted adult."],
@@ -41,17 +37,15 @@ const safetyPanel = document.getElementById("safetyPanel");
 const stageButtons = document.querySelectorAll("[data-stage]");
 
 function showSafetyStage(stage) {
-  safetyPanel.innerHTML = safetyGuides[stage].map(
-    ([number, title, description]) => `
-      <article class="safety-step">
-        <span class="step-number">${number}</span>
-        <div>
-          <h3>${title}</h3>
-          <p>${description}</p>
-        </div>
-      </article>
-    `
-  ).join("");
+  safetyPanel.innerHTML = safetyGuides[stage].map(([number, title, description]) => `
+    <article class="safety-step">
+      <span class="step-number">${number}</span>
+      <div>
+        <h3>${title}</h3>
+        <p>${description}</p>
+      </div>
+    </article>
+  `).join("");
 
   stageButtons.forEach(button => {
     const active = button.dataset.stage === stage;
@@ -68,9 +62,7 @@ stageButtons.forEach(button => {
 
 showSafetyStage("before");
 
-
-/* 2. EMERGENCY KIT CHECKLIST */
-
+// Emergency kit checklist
 const kitItems = [
   "Drinking water and safe, non-perishable food",
   "Torch and spare batteries",
@@ -96,7 +88,6 @@ kitChecklist.innerHTML = kitItems.map((item, index) => `
 function updateKitProgress() {
   const boxes = [...document.querySelectorAll(".kit-checkbox")];
   const checked = boxes.filter(box => box.checked).length;
-
   kitProgress.style.width = `${(checked / boxes.length) * 100}%`;
   kitCount.textContent = `${checked} of ${boxes.length} items ready`;
 }
@@ -107,28 +98,17 @@ document.getElementById("resetKit").addEventListener("click", () => {
   document.querySelectorAll(".kit-checkbox").forEach(box => {
     box.checked = false;
   });
-
   updateKitProgress();
 });
 
 updateKitProgress();
 
-
-/* 3. MOBILE NAVIGATION */
-
+// Mobile navigation
 const menuToggle = document.getElementById("menuToggle");
 const mainNav = document.getElementById("mainNav");
 
-function closeNavigation() {
-  mainNav.classList.remove("open");
-  menuToggle.setAttribute("aria-expanded", "false");
-  menuToggle.setAttribute("aria-label", "Open navigation");
-  menuToggle.textContent = "☰";
-}
-
 menuToggle.addEventListener("click", () => {
   const isOpen = mainNav.classList.toggle("open");
-
   menuToggle.setAttribute("aria-expanded", String(isOpen));
   menuToggle.setAttribute(
     "aria-label",
@@ -138,180 +118,46 @@ menuToggle.addEventListener("click", () => {
 });
 
 mainNav.querySelectorAll("a").forEach(link => {
-  link.addEventListener("click", closeNavigation);
-});
-
-
-/* 4. ABOUT US DROPDOWN */
-
-const aboutToggle = document.getElementById("aboutToggle");
-const aboutPanel = document.getElementById("aboutPanel");
-const aboutArrow = document.getElementById("aboutArrow");
-
-function closeAboutDropdown() {
-  aboutToggle.setAttribute("aria-expanded", "false");
-  aboutPanel.hidden = true;
-  aboutArrow.textContent = "⌄";
-}
-
-aboutToggle.addEventListener("click", event => {
-  event.stopPropagation();
-
-  const isOpen =
-    aboutToggle.getAttribute("aria-expanded") === "true";
-
-  aboutToggle.setAttribute("aria-expanded", String(!isOpen));
-  aboutPanel.hidden = isOpen;
-  aboutArrow.textContent = isOpen ? "⌄" : "⌃";
-});
-
-document.addEventListener("click", event => {
-  if (!event.target.closest(".nav-dropdown")) {
-    closeAboutDropdown();
-  }
-});
-
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") {
-    closeAboutDropdown();
-    closeNavigation();
-  }
-});
-
-
-/* 5. INTERACTIVE ASSAM MAP */
-
-const assamMapElement = document.getElementById("assamMap");
-
-if (assamMapElement && window.L) {
-  const assamMap = L.map("assamMap").setView([26.2, 92.8], 7);
-
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 18,
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(assamMap);
-
-  const assamLocations = [
-    {
-      name: "Guwahati",
-      coordinates: [26.1445, 91.7362],
-      description: "A major city in the Brahmaputra valley."
-    },
-    {
-      name: "Dibrugarh",
-      coordinates: [27.4728, 94.9120],
-      description: "A city in Upper Assam."
-    },
-    {
-      name: "Tezpur",
-      coordinates: [26.6528, 92.7926],
-      description: "A city in the Sonitpur area."
-    },
-    {
-      name: "Barpeta",
-      coordinates: [26.3226, 91.0063],
-      description: "A town in western Assam."
-    },
-    {
-      name: "Silchar",
-      coordinates: [24.8333, 92.7789],
-      description: "A major city in the Barak valley."
-    },
-    {
-      name: "Dhubri",
-      coordinates: [26.0186, 89.9856],
-      description: "A town in western Assam."
-    },
-    {
-      name: "Jorhat",
-      coordinates: [26.7509, 94.2037],
-      description: "A city in eastern Assam."
-    },
-    {
-      name: "Goalpara",
-      coordinates: [26.1760, 90.6260],
-      description: "A town in western Assam."
-    }
-  ];
-
-  assamLocations.forEach(place => {
-    const mapsURL =
-      "https://www.google.com/maps/search/?api=1&query=" +
-      encodeURIComponent(`${place.name}, Assam, India`);
-
-    L.marker(place.coordinates)
-      .addTo(assamMap)
-      .bindPopup(`
-        <strong>${place.name}</strong><br>
-        ${place.description}<br>
-        <span>Reference location — not a live flood reading.</span><br>
-        <a href="${mapsURL}" target="_blank" rel="noopener noreferrer">
-          Explore this area ↗
-        </a>
-      `);
+  link.addEventListener("click", () => {
+    mainNav.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Open navigation");
+    menuToggle.textContent = "☰";
   });
+});
 
-  // Help Leaflet calculate the map size after the page layout loads.
-  window.addEventListener("load", () => {
-    assamMap.invalidateSize();
-  });
-}
-
-
-/* 6. EMBEDDED HOSPITAL AND CLINIC LOCATOR */
-
+// External clinic locator
 const locationInput = document.getElementById("locationInput");
 const clinicSearch = document.getElementById("clinicSearch");
-const clinicMapFrame = document.getElementById("clinicMapFrame");
-const clinicStatus = document.getElementById("clinicStatus");
-const openClinicSearch = document.getElementById("openClinicSearch");
 
 function searchClinics(place) {
   const cleanedPlace = place.trim();
 
   if (!cleanedPlace) {
-    locationInput.setCustomValidity(
-      "Enter a town, district or area in Assam first."
-    );
-    locationInput.reportValidity();
     locationInput.focus();
+    locationInput.setCustomValidity("Enter a town or area in Assam first.");
+    locationInput.reportValidity();
     return;
   }
 
   locationInput.setCustomValidity("");
 
-  // Keep searches focused on Assam.
-  const query = `hospitals and clinics in ${cleanedPlace}, Assam, India`;
+  const query = `${cleanedPlace}, Assam, India hospitals and clinics`;
+  const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 
-  const embeddedURL =
-    "https://www.google.com/maps?q=" +
-    encodeURIComponent(query) +
-    "&output=embed";
-
-  const externalURL =
-    "https://www.google.com/maps/search/?api=1&query=" +
-    encodeURIComponent(query);
-
-  clinicMapFrame.src = embeddedURL;
-  openClinicSearch.href = externalURL;
-
-  clinicStatus.textContent =
-    `Showing embedded map results for ${cleanedPlace}, Assam. ` +
-    "Listings may be incomplete; confirm facility details before travelling.";
+  window.open(url, "_blank", "noopener,noreferrer");
 }
-
-clinicSearch.addEventListener("click", () => {
-  searchClinics(locationInput.value);
-});
 
 locationInput.addEventListener("input", () => {
   locationInput.setCustomValidity("");
 });
 
+clinicSearch.addEventListener("click", () => {
+  searchClinics(locationInput.value);
+});
+
 locationInput.addEventListener("keydown", event => {
   if (event.key === "Enter") {
-    event.preventDefault();
     searchClinics(locationInput.value);
   }
 });
@@ -319,14 +165,12 @@ locationInput.addEventListener("keydown", event => {
 document.querySelectorAll("[data-place]").forEach(button => {
   button.addEventListener("click", () => {
     const place = button.dataset.place;
-    locationInput.value = place;
+    locationInput.value = place.replace(" hospitals", "");
     searchClinics(place);
   });
 });
 
-
-/* 7. FIVE-QUESTION FLOOD SAFETY QUIZ */
-
+// Five-question flood safety quiz
 const quizQuestions = [
   {
     question: "1. What should you do if authorities order an evacuation?",
@@ -382,7 +226,6 @@ const quizQuestions = [
 
 const quizArea = document.getElementById("quizArea");
 const quizProgress = document.getElementById("quizProgress");
-
 let currentQuestion = 0;
 let quizScore = 0;
 let quizAnswered = false;
@@ -396,16 +239,13 @@ function startQuiz() {
 
 function renderQuestion() {
   quizAnswered = false;
-
   const item = quizQuestions[currentQuestion];
 
   quizProgress.style.width =
     `${(currentQuestion / quizQuestions.length) * 100}%`;
 
   quizArea.innerHTML = `
-    <p class="small-note">
-      Question ${currentQuestion + 1} of ${quizQuestions.length}
-    </p>
+    <p class="small-note">Question ${currentQuestion + 1} of ${quizQuestions.length}</p>
     <h3>${item.question}</h3>
     <div id="quizOptions">
       ${item.options.map((option, index) => `
@@ -416,9 +256,7 @@ function renderQuestion() {
     </div>
     <div id="quizFeedback" aria-live="polite"></div>
     <button class="button button-primary" id="nextQuestion" hidden>
-      ${currentQuestion === quizQuestions.length - 1
-        ? "See results"
-        : "Next question →"}
+      ${currentQuestion === quizQuestions.length - 1 ? "See results" : "Next question →"}
     </button>
   `;
 
@@ -440,7 +278,6 @@ function renderQuestion() {
 
 function answerQuestion(selectedIndex) {
   if (quizAnswered) return;
-
   quizAnswered = true;
 
   const item = quizQuestions[currentQuestion];
@@ -450,7 +287,6 @@ function answerQuestion(selectedIndex) {
 
   quizArea.querySelectorAll("[data-answer]").forEach(button => {
     button.disabled = true;
-
     const index = Number(button.dataset.answer);
 
     if (index === item.answer) {
@@ -468,7 +304,6 @@ function answerQuestion(selectedIndex) {
   `;
 
   document.getElementById("nextQuestion").hidden = false;
-
   quizProgress.style.width =
     `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
 }
@@ -477,7 +312,6 @@ function showQuizResults() {
   quizProgress.style.width = "100%";
 
   let message;
-
   if (quizScore === 5) {
     message = "Excellent! You answered every question correctly.";
   } else if (quizScore >= 3) {
