@@ -1,783 +1,259 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0E4C92">
-
-  <title>FloodSafe Assam | Be Aware. Be Prepared. Be Safe.</title>
-
-  <meta
-    name="description"
-    content="A flood-safety resource for communities in Assam and students in Grades 5–7, with safety advice, emergency contacts, a quiz and river-level data links."
-  >
-
-  <!-- Your website stylesheet -->
+  <title>FloodWise Assam | Be Aware. Be Prepared. Be Safe.</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- Interactive map library -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  >
-
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    defer
-  ></script>
-
-  <!-- Your website functionality -->
-  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script defer src="script.js"></script>
 </head>
-
 <body>
-
-  <!-- ================= NAVIGATION ================= -->
-
-  <header class="navbar">
-
-    <button class="brand" data-home aria-label="FloodSafe Assam home"
-      style="border:0;background:transparent;padding:0;text-align:left;cursor:pointer;">
-
-      <span class="brand-icon" aria-hidden="true">≈</span>
-
-      <span>
-        Flood<span class="brand-green">Safe</span>
-        <small>ASSAM</small>
-      </span>
-
+  <header class="topbar">
+    <button class="brand" data-view="home" aria-label="FloodWise home">
+      <span class="brand-mark">F<span>+</span></span>
+      <span class="brand-words">floodwise<small>ASSAM FLOOD SAFETY</small></span>
     </button>
 
-    <nav class="nav-links" aria-label="Main navigation">
-
-      <button class="nav-link active" data-view="home">
-        Home
-      </button>
-
-      <button class="nav-link" data-view="tracker">
-        Flood Tracker
-      </button>
-
-      <button class="nav-link" data-view="safety">
-        Safety Guide
-      </button>
-
-      <button class="nav-link" data-view="help">
-        Emergency Help
-      </button>
-
-      <button class="nav-link" data-view="quiz">
-        Safety Quiz
-      </button>
-
+    <nav class="navigation" aria-label="Main navigation">
+      <button class="nav-link active" data-view="home">Home</button>
+      <button class="nav-link" data-view="tracker">Flood tracker</button>
+      <button class="nav-link" data-view="safety">Safety guide</button>
+      <button class="nav-link" data-view="help">Get help</button>
+      <button class="nav-link" data-view="quiz">Safety quiz</button>
       <div class="about-wrap">
-
-        <button
-          class="nav-link"
-          id="aboutButton"
-          aria-expanded="false"
-          aria-controls="aboutContent"
-        >
-          About Us <span id="aboutArrow">▾</span>
+        <button class="nav-link" id="aboutButton" aria-expanded="false">
+          About us <span id="aboutArrow">⌄</span>
         </button>
-
-        <div class="about-dropdown" id="aboutContent" hidden>
-
-          <h3>About Us</h3>
-
-          <p>
-            We created this website to help flood-affected communities
-            in Assam and students in Grades 5–7 understand floods and
-            stay safe. Our goal is to make reliable flood-safety
-            information accessible and easy to understand through
-            safety tips, health guidance, flood tracking and emergency
-            resources. We believe that being informed and prepared can
-            help people make safer decisions during floods.
-          </p>
-
+        <div class="about-popover" id="aboutContent" hidden>
+          FloodWise helps communities and students in Assam learn about flood
+          risks, prepare for emergencies and find reliable safety information.
         </div>
-
       </div>
-
     </nav>
 
-    <a class="emergency-pill" href="#emergency"
-      onclick="document.getElementById('helpView').hidden=false;
-      document.getElementById('homeView').hidden=true;
-      document.getElementById('trackerView').hidden=true;
-      document.getElementById('safetyView').hidden=true;
-      document.getElementById('quizView').hidden=true;">
-      <span aria-hidden="true">●</span> Get Help
-    </a>
-
+    <button class="header-cta" data-view="help">Emergency help <span>↗</span></button>
   </header>
 
-
-  <!-- ================= HOMEPAGE ================= -->
-
   <main>
-
-    <section id="homeView" class="home-view">
-
-      <!-- Main photographic banner -->
-
+    <section class="view home-view" id="homeView">
       <div class="hero">
-
-        <img
-          class="hero-image"
-          src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&fit=crop&w=1800&q=85"
-          alt="Floodwater covering a landscape"
-        >
-
-        <div class="hero-shade"></div>
+        <div class="hero-image" role="img" aria-label="Floodwater flowing through a green landscape"></div>
+        <div class="hero-overlay"></div>
 
         <div class="hero-copy">
+          <div class="eyebrow hero-eyebrow"><span class="live-dot"></span> FLOOD SAFETY · ASSAM, INDIA</div>
+          <h1>When water rises,<br>knowledge <em>saves.</em></h1>
+          <p>Be ready for the unexpected. Find the information you need to
+            protect yourself, your family and your community.</p>
+          <div class="hero-actions">
+            <button class="button button-light" data-view="safety">
+              Explore safety guide <span>↗</span>
+            </button>
+            <button class="hero-secondary" data-view="tracker">
+              Explore flood tracker <span>→</span>
+            </button>
+          </div>
+        </div>
 
-          <span class="eyebrow">
-            <span class="eyebrow-dot"></span>
-            FLOOD AWARENESS & PREPAREDNESS
-          </span>
+        <div class="hero-caption">
+          <span class="caption-rule"></span>
+          <span>BE AWARE. BE PREPARED. BE SAFE.</span>
+        </div>
+        <div class="hero-count">01 <span>/</span> 04</div>
+      </div>
 
-          <h1>
-            When floods rise,<br>
-            <span>knowledge saves.</span>
-          </h1>
+      <section class="toolkit">
+        <div class="toolkit-heading">
+          <div>
+            <span class="eyebrow eyebrow-blue">YOUR FLOOD-SAFETY TOOLKIT</span>
+            <h2>Know what to do. <span>Know where to go.</span></h2>
+          </div>
+          <p>Four simple ways to stay informed and prepared.</p>
+        </div>
 
-          <p>
-            Understand flood risks, prepare for emergencies and find
-            reliable safety information for communities across Assam.
-          </p>
-
-          <button class="primary-btn" data-view="safety">
-            Explore the Safety Guide <span aria-hidden="true">→</span>
+        <div class="feature-grid">
+          <button class="feature-card card-blue" data-view="tracker">
+            <span class="feature-top"><span>01 / MONITOR</span><span class="feature-icon">⌁</span></span>
+            <span class="feature-title">Flood tracker</span>
+            <span class="feature-description">Explore river locations and find official water-level updates.</span>
+            <span class="feature-link">Explore tracker <b>↗</b></span>
           </button>
 
+          <button class="feature-card card-green" data-view="safety">
+            <span class="feature-top"><span>02 / PREPARE</span><span class="feature-icon">◇</span></span>
+            <span class="feature-title">Safety guide</span>
+            <span class="feature-description">Learn what to do before, during and after a flood.</span>
+            <span class="feature-link">Read the guide <b>↗</b></span>
+          </button>
+
+          <button class="feature-card card-sand" data-view="help">
+            <span class="feature-top"><span>03 / CONNECT</span><span class="feature-icon">＋</span></span>
+            <span class="feature-title">Emergency help</span>
+            <span class="feature-description">Find emergency contacts and trusted resources.</span>
+            <span class="feature-link">Find help <b>↗</b></span>
+          </button>
+
+          <button class="feature-card card-white" data-view="quiz">
+            <span class="feature-top"><span>04 / LEARN</span><span class="feature-icon">✳</span></span>
+            <span class="feature-title">Safety quiz</span>
+            <span class="feature-description">Test your knowledge and practise safer choices.</span>
+            <span class="feature-link">Take the quiz <b>↗</b></span>
+          </button>
         </div>
 
-        <!-- Smaller tagline at the lower-right -->
-
-        <div class="hero-tagline">
-          <span>BE AWARE.</span>
-          <span>BE PREPARED.</span>
-          <strong>BE SAFE.</strong>
+        <div class="data-strip">
+          <span class="info-icon">i</span>
+          <span><strong>Stay informed.</strong> Conditions can change quickly.</span>
+          <a href="https://asdma.assam.gov.in/" target="_blank" rel="noopener">Official Assam updates ↗</a>
+          <span class="strip-location">ASSAM, INDIA <i></i></span>
         </div>
-
-        <span class="photo-credit">
-          Flood awareness begins with preparation.
-        </span>
-
-      </div>
-
-
-      <!-- Four clickable feature rectangles -->
-
-      <div class="home-intro">
-
-        <div>
-          <span class="section-kicker">YOUR FLOOD SAFETY HUB</span>
-          <h2>Know what to do. Know where to go.</h2>
-        </div>
-
-        <p>
-          Four useful tools to help you stay informed and prepared.
-        </p>
-
-      </div>
-
-
-      <div class="feature-grid">
-
-        <button class="feature-card" data-view="tracker">
-
-          <span class="feature-icon blue-icon" aria-hidden="true">
-            ◉
-          </span>
-
-          <span class="feature-text">
-            <strong>Flood Tracker</strong>
-            <small>
-              Explore Assam's river monitoring data and official
-              flood updates.
-            </small>
-            <b>Explore data <span>→</span></b>
-          </span>
-
-          <span class="card-arrow" aria-hidden="true">↗</span>
-
-        </button>
-
-
-        <button class="feature-card" data-view="safety">
-
-          <span class="feature-icon green-icon" aria-hidden="true">
-            ✓
-          </span>
-
-          <span class="feature-text">
-            <strong>Safety Guide</strong>
-            <small>
-              Learn what to do before, during and after a flood.
-            </small>
-            <b>Learn safety <span>→</span></b>
-          </span>
-
-          <span class="card-arrow" aria-hidden="true">↗</span>
-
-        </button>
-
-
-        <button class="feature-card" data-view="help">
-
-          <span class="feature-icon orange-icon" aria-hidden="true">
-            !
-          </span>
-
-          <span class="feature-text">
-            <strong>Emergency Help</strong>
-            <small>
-              Find official emergency contacts and useful resources.
-            </small>
-            <b>Find help <span>→</span></b>
-          </span>
-
-          <span class="card-arrow" aria-hidden="true">↗</span>
-
-        </button>
-
-
-        <button class="feature-card" data-view="quiz">
-
-          <span class="feature-icon purple-icon" aria-hidden="true">
-            ?
-          </span>
-
-          <span class="feature-text">
-            <strong>Safety Quiz</strong>
-            <small>
-              Test your knowledge and practise making safer choices.
-            </small>
-            <b>Take the quiz <span>→</span></b>
-          </span>
-
-          <span class="card-arrow" aria-hidden="true">↗</span>
-
-        </button>
-
-      </div>
-
-
-      <!-- Real-data source strip -->
-
-      <div class="data-strip">
-
-        <span class="data-icon" aria-hidden="true">⌁</span>
-
-        <div class="data-copy">
-          <span>OFFICIAL INFORMATION</span>
-
-          <strong>
-            Stay informed about Assam's rivers and flood conditions.
-          </strong>
-
-          <small>
-            Explore river-level telemetry published through the
-            National Water Data Portal and check official flood reports.
-          </small>
-        </div>
-
-        <a
-          class="data-link"
-          href="https://www.nwdp.nwic.gov.in/dataset/river-water-level-telemetry-hourly-assam-department"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View data ↗
-        </a>
-
-      </div>
-
-
-      <footer class="home-footer">
-
-        <span>FLOODSAFE ASSAM</span>
-
-        <span>Awareness. Preparedness. Community.</span>
-
-        <span>
-          Information sources:
-          <a
-            href="https://www.asdma.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-          ><strong>ASDMA</strong></a>
-          ·
-          <a
-            href="https://www.nwdp.nwic.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-          ><strong>NWDP</strong></a>
-        </span>
-
-      </footer>
-
+      </section>
     </section>
 
-
-    <!-- ================= FLOOD TRACKER ================= -->
-
-    <section id="trackerView" class="content-view" hidden>
-
-      <button class="back-btn" data-home>
-        ← Back to home
-      </button>
-
+    <section class="view inner-view" id="trackerView" hidden>
       <div class="page-heading">
-
-        <span class="section-kicker">LIVE DATA & MONITORING</span>
-
-        <h1>Flood Tracker</h1>
-
-        <p>
-          Explore Assam's river-monitoring information and use official
-          resources to check the latest reported conditions. River
-          levels can change quickly, so always follow official alerts.
-        </p>
-
+        <button class="back-link" data-view="home">← Back home</button>
+        <span class="eyebrow eyebrow-blue">01 / MONITOR</span>
+        <h1>Flood <em>tracker.</em></h1>
+        <p>Explore river locations in Assam and access official water-level information.</p>
       </div>
-
-
       <div class="tracker-layout">
-
-        <!-- Interactive map and live-data status -->
-
-        <article class="panel">
-
+        <div class="panel map-panel">
           <div class="panel-heading">
-
-            <div>
-              <span class="section-kicker">ASSAM, INDIA</span>
-              <h2>River monitoring map</h2>
-            </div>
-
-            <span class="status-label">SOURCE CHECK</span>
-
+            <div><span class="eyebrow eyebrow-blue">GEOGRAPHIC OVERVIEW</span><h2>River watch</h2></div>
+            <span class="small-tag">ASSAM</span>
           </div>
-
-          <p class="muted">
-            The map displays matched readings only when the data feed
-            loads successfully.
-          </p>
-
-          <div
-            id="liveStatus"
-            class="map-status"
-            role="status"
-            aria-live="polite"
-          >
-            Connecting to the river-level data source…
+          <div id="liveMap" aria-label="Map showing selected locations in Assam"></div>
+          <p class="map-note">Pins show reference locations, not live flood warnings.</p>
+        </div>
+        <aside class="tracker-sidebar">
+          <div class="panel status-panel">
+            <span class="panel-symbol">↗</span>
+            <span class="eyebrow eyebrow-blue">OFFICIAL DATA</span>
+            <h2>Check current conditions</h2>
+            <p id="liveStatus">Open an official source to check the latest available flood information.</p>
+            <a class="button button-blue" href="https://ffs.india-water.gov.in/" target="_blank" rel="noopener">View flood forecasts ↗</a>
           </div>
-
-          <div
-            id="liveMap"
-            role="application"
-            aria-label="Interactive map of Assam river monitoring stations"
-          ></div>
-
-          <p id="lastUpdated" class="fine-print">
-            Waiting for the first data check…
-          </p>
-
-          <div class="source-links">
-
-            <a
-              class="secondary-btn"
-              href="https://www.nwdp.nwic.gov.in/dataset/river-water-level-telemetry-hourly-assam-department"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              River-level dataset ↗
-            </a>
-
-            <a
-              class="secondary-btn"
-              href="https://www.asdma.gov.in/reports.html"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Official flood reports ↗
-            </a>
-
+          <div class="panel source-panel">
+            <span class="eyebrow eyebrow-blue">TRUSTED SOURCES</span>
+            <a href="https://nwdp.nwic.gov.in/" target="_blank" rel="noopener">National Water Data Portal <span>↗</span></a>
+            <a href="https://asdma.assam.gov.in/" target="_blank" rel="noopener">Assam Disaster Management <span>↗</span></a>
+            <a href="https://ffs.india-water.gov.in/" target="_blank" rel="noopener">Central flood forecasts <span>↗</span></a>
+            <p id="lastUpdated">No live reading has been retrieved by this page.</p>
           </div>
-
-        </article>
-
-
-        <!-- Latest matched observations -->
-
-        <article class="panel">
-
-          <span class="section-kicker">OBSERVATIONS</span>
-
-          <h2>Latest available readings</h2>
-
-          <p class="muted">
-            Water levels are measured in metres. The observation time
-            is shown where the source provides it.
-          </p>
-
-          <div id="readingsList" class="readings-list">
-
-            <p class="fine-print">
-              Loading available readings…
-            </p>
-
-          </div>
-
-          <div class="safety-alert">
-
-            <span class="alert-symbol" aria-hidden="true">!</span>
-
-            <div>
-              <strong>Important safety reminder</strong>
-
-              <p>
-                A river-level number alone does not tell you whether
-                your area is safe. Check official warnings and local
-                instructions before making decisions.
-              </p>
-            </div>
-
-          </div>
-
-          <p class="fine-print">
-            The map is an informational tool, not an emergency warning
-            system. A missing reading does not mean there is no flood risk.
-          </p>
-
-        </article>
-
+        </aside>
       </div>
-
+      <div class="notice-bar"><strong>Remember:</strong> Follow official warnings and local authorities. This map is for orientation, not evacuation decisions.</div>
     </section>
 
-
-    <!-- ================= SAFETY GUIDE ================= -->
-
-    <section id="safetyView" class="content-view" hidden>
-
-      <button class="back-btn" data-home>
-        ← Back to home
-      </button>
-
+    <section class="view inner-view" id="safetyView" hidden>
       <div class="page-heading">
-
-        <span class="section-kicker">BE READY, NOT UNPREPARED</span>
-
-        <h1>Your Flood Safety Guide</h1>
-
-        <p>
-          Knowing what to do before, during and after a flood can help
-          you make safer decisions and protect the people around you.
-        </p>
-
+        <button class="back-link" data-view="home">← Back home</button>
+        <span class="eyebrow eyebrow-blue">02 / PREPARE</span>
+        <h1>Small steps. <em>Safer choices.</em></h1>
+        <p>Knowing what to do can help you and your family prepare for a flood.</p>
       </div>
-
-
       <div class="safety-grid">
-
-        <article class="panel safety-card">
-
-          <span class="safety-number">01</span>
-
-          <div class="safety-symbol" aria-hidden="true">✓</div>
-
-          <span class="section-kicker">BEFORE</span>
-
-          <h2>Prepare early</h2>
-
+        <article class="safety-card safety-before">
+          <div class="safety-card-top"><span>01</span><span class="safety-icon">⌂</span></div>
+          <span class="eyebrow">BEFORE A FLOOD</span>
+          <h2>Prepare early.</h2>
           <ul>
-            <li>Follow official weather forecasts and flood alerts.</li>
-            <li>Keep drinking water, a torch, essential medicines and
-              important documents ready.</li>
-            <li>Know your household's evacuation route and safe meeting
-              point.</li>
-            <li>Charge phones and save important emergency contacts.</li>
-            <li>Help children and older family members understand the plan.</li>
+            <li>Follow official weather and flood warnings.</li>
+            <li>Prepare a bag with drinking water, food, medicines and a torch.</li>
+            <li>Keep important documents protected and phones charged.</li>
+            <li>Know your family's evacuation route and meeting point.</li>
           </ul>
-
         </article>
-
-
-        <article class="panel safety-card">
-
-          <span class="safety-number">02</span>
-
-          <div class="safety-symbol" aria-hidden="true">!</div>
-
-          <span class="section-kicker">DURING</span>
-
-          <h2>Stay safe</h2>
-
+        <article class="safety-card safety-during">
+          <div class="safety-card-top"><span>02</span><span class="safety-icon">↗</span></div>
+          <span class="eyebrow">DURING A FLOOD</span>
+          <h2>Stay alert.</h2>
           <ul>
-            <li>Follow instructions from local authorities.</li>
-            <li>Move to safer ground when advised to evacuate.</li>
+            <li>Move to higher ground when authorities advise you to.</li>
             <li>Never walk, swim or drive through floodwater.</li>
-            <li>Stay away from electrical wires, drains and fast-flowing
-              water.</li>
-            <li>Keep listening for official updates and alerts.</li>
+            <li>Stay away from swollen rivers, drains and fallen power lines.</li>
+            <li>Follow evacuation instructions and seek help when needed.</li>
           </ul>
-
         </article>
-
-
-        <article class="panel safety-card">
-
-          <span class="safety-number">03</span>
-
-          <div class="safety-symbol" aria-hidden="true">↗</div>
-
-          <span class="section-kicker">AFTER</span>
-
-          <h2>Return carefully</h2>
-
+        <article class="safety-card safety-after">
+          <div class="safety-card-top"><span>03</span><span class="safety-icon">✳</span></div>
+          <span class="eyebrow">AFTER A FLOOD</span>
+          <h2>Return carefully.</h2>
           <ul>
-            <li>Return home only when authorities say it is safe.</li>
-            <li>Avoid damaged buildings and fallen power lines.</li>
-            <li>Do not drink flood-contaminated water; use safe water.</li>
-            <li>Wash hands and avoid food that may have been contaminated.</li>
-            <li>Ask local health services for help if you feel unwell.</li>
+            <li>Return only when authorities say it is safe.</li>
+            <li>Avoid damaged buildings and electrical equipment exposed to water.</li>
+            <li>Drink safe water and avoid food contaminated by floodwater.</li>
+            <li>Report hazards and seek medical help if you feel unwell.</li>
           </ul>
-
         </article>
-
       </div>
-
-
-      <div class="safety-alert">
-
-        <span class="alert-symbol" aria-hidden="true">!</span>
-
-        <div>
-          <strong>Remember: never take risks to check a flood.</strong>
-
-          <p>
-            Do not approach rivers or cross floodwater to take photos,
-            inspect water levels or retrieve belongings. Follow local
-            emergency instructions.
-          </p>
-        </div>
-
-        <a
-          href="https://asdma.assam.gov.in/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ASDMA ↗
-        </a>
-
-      </div>
-
+      <div class="notice-bar"><strong>In danger?</strong> Contact emergency services and follow local official instructions.</div>
     </section>
 
-
-    <!-- ================= EMERGENCY HELP ================= -->
-
-    <section id="helpView" class="content-view" hidden>
-
-      <button class="back-btn" data-home>
-        ← Back to home
-      </button>
-
+    <section class="view inner-view" id="helpView" hidden>
       <div class="page-heading">
-
-        <span class="section-kicker">HELP & EMERGENCY RESOURCES</span>
-
-        <h1>Find Help When It Matters</h1>
-
-        <p>
-          Save official emergency contacts before you need them.
-          If there is immediate danger, contact emergency services
-          and follow local authorities' instructions.
-        </p>
-
+        <button class="back-link" data-view="home">← Back home</button>
+        <span class="eyebrow eyebrow-blue">03 / CONNECT</span>
+        <h1>Help is <em>here.</em></h1>
+        <p>Keep important emergency contacts accessible and follow local instructions.</p>
       </div>
-
-
       <div class="help-layout">
-
-        <article class="panel main-helpline">
-
-          <span class="section-kicker">STATE EMERGENCY CONTROL ROOM</span>
-
-          <div class="phone-icon" aria-hidden="true">☎</div>
-
-          <h2>1070</h2>
-
-          <p>
-            Assam State Emergency Operations Centre
-          </p>
-
-          <a class="primary-btn" href="tel:1070">
-            Call 1070 ↗
-          </a>
-
-          <p class="fine-print">
-            If the line is unavailable, use the official contact
-            information linked on this page or contact your local
-            district emergency control room.
-          </p>
-
-        </article>
-
-
-        <article class="panel helpline-list">
-
-          <span class="section-kicker">IMPORTANT CONTACTS</span>
-
-          <h2>Emergency numbers</h2>
-
-          <div class="contact-row">
-
-            <div>
-              <strong>1070</strong>
-              <span>State Emergency Operations Centre</span>
-            </div>
-
-            <a href="tel:1070">Call ↗</a>
-
-          </div>
-
-
-          <div class="contact-row">
-
-            <div>
-              <strong>1077</strong>
-              <span>District Emergency Operations Centre</span>
-            </div>
-
-            <a href="tel:1077">Call ↗</a>
-
-          </div>
-
-
-          <div class="contact-row">
-
-            <div>
-              <strong>1079</strong>
-              <span>Disaster management helpline listed by ASDMA</span>
-            </div>
-
-            <a href="tel:1079">Call ↗</a>
-
-          </div>
-
-
-          <div class="contact-row">
-
-            <div>
-              <strong>108</strong>
-              <span>Ambulance emergency service</span>
-            </div>
-
-            <a href="tel:108">Call ↗</a>
-
-          </div>
-
-
-          <p class="fine-print">
-            These numbers are listed in Assam State Disaster Management
-            Authority resources. Availability can vary; verify current
-            contact details with official authorities.
-          </p>
-
-          <a
-            class="text-link"
-            href="https://asdma.assam.gov.in/information-services/toll-free-numbers"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Verify official emergency numbers ↗
-          </a>
-
-        </article>
-
-      </div>
-
-
-      <article class="panel clinic-panel">
-
-        <span class="clinic-icon" aria-hidden="true">+</span>
-
-        <div class="clinic-copy">
-
-          <span class="section-kicker">HEALTH & LOCAL SERVICES</span>
-
-          <h2>Find local assistance</h2>
-
-          <p>
-            For nearby clinics, hospitals and other essential services,
-            use a trusted map service or contact your district
-            administration for current local information.
-          </p>
-
-          <a
-            class="secondary-btn"
-            href="https://www.google.com/maps/search/hospitals+in+Assam/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Find hospitals in Assam ↗
-          </a>
-
-          <a
-            class="secondary-btn"
-            href="https://www.asdma.gov.in/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Visit ASDMA ↗
-          </a>
-
+        <div class="help-feature">
+          <span class="eyebrow">EMERGENCY CONTACTS</span>
+          <h2>In an emergency,<br>reach out.</h2>
+          <p>If you are in immediate danger, move to a safer place if possible and contact the appropriate emergency service.</p>
+          <a class="button button-light" href="https://asdma.assam.gov.in/" target="_blank" rel="noopener">Official ASDMA website ↗</a>
         </div>
-
-      </article>
-
+        <div class="contact-list">
+          <a class="contact-row" href="tel:1070"><span class="contact-symbol">＋</span><span><small>STATE EMERGENCY OPERATIONS CENTRE</small><strong>1070</strong></span><span class="contact-arrow">↗</span></a>
+          <a class="contact-row" href="tel:1077"><span class="contact-symbol">＋</span><span><small>DISTRICT EMERGENCY OPERATIONS CENTRE</small><strong>1077</strong></span><span class="contact-arrow">↗</span></a>
+          <a class="contact-row" href="tel:1079"><span class="contact-symbol">＋</span><span><small>DISASTER MANAGEMENT HELPLINE</small><strong>1079</strong></span><span class="contact-arrow">↗</span></a>
+          <a class="contact-row" href="tel:108"><span class="contact-symbol">＋</span><span><small>AMBULANCE</small><strong>108</strong></span><span class="contact-arrow">↗</span></a>
+          <p class="contact-note">If a number does not connect, seek assistance from local authorities or the official emergency services.</p>
+        </div>
+      </div>
     </section>
 
-
-    <!-- ================= SAFETY QUIZ ================= -->
-
-    <section id="quizView" class="content-view" hidden>
-
-      <button class="back-btn" data-home>
-        ← Back to home
-      </button>
-
+    <section class="view inner-view" id="quizView" hidden>
       <div class="page-heading">
-
-        <span class="section-kicker">LEARN BY PRACTISING</span>
-
-        <h1>Test Your Flood Safety Knowledge</h1>
-
-        <p>
-          Try these four questions to check your knowledge of flood
-          preparedness and safer decisions.
-        </p>
-
+        <button class="back-link" data-view="home">← Back home</button>
+        <span class="eyebrow eyebrow-blue">04 / LEARN</span>
+        <h1>Think fast. <em>Stay safe.</em></h1>
+        <p>Choose the safest answer in each situation.</p>
       </div>
-
-
-      <article class="panel quiz-panel" id="quizContent">
-
-        <div class="quiz-top">
-
-          <span id="quizProgress">QUESTION 1 OF 4</span>
-
-          <span>FLOOD SAFETY QUIZ</span>
-
+      <div class="quiz-shell">
+        <div class="quiz-topline"><span class="eyebrow eyebrow-blue">FLOOD SAFETY CHALLENGE</span><span id="quizProgress">QUESTION 1 OF 5</span></div>
+        <div class="progress-track"><div id="quizProgressBar"></div></div>
+        <div id="quizContent">
+          <h2 id="quizQuestion">What should you do if floodwater covers a road?</h2>
+          <div class="quiz-answers" id="quizAnswers"></div>
+          <p id="quizFeedback" aria-live="polite"></p>
+          <button class="button button-blue" id="nextQuestion" disabled>Next question →</button>
         </div>
+        <div id="quizResult" hidden>
+          <span class="result-icon">✳</span>
+          <h2>Challenge complete!</h2>
+          <p>Your score: <strong id="quizScore">0/5</strong></p>
+          <p>Keep learning and always follow official flood-safety advice.</p>
+          <button class="button button-blue" id="restartQuiz">Try again ↻</button>
+        </div>
+      </div>
+    </section>
+  </main>
 
+  <footer class="site-footer">
+    <button class="footer-brand" data-view="home">floodwise<span>+</span></button>
+    <span>Preparedness starts with awareness.</span>
+    <a href="https://asdma.assam.gov.in/" target="_blank" rel="noopener">Official safety information ↗</a>
+  </footer>
+</body>
+</html>
         <div
           class="quiz-progress"
           id="quizProgressTrack"
