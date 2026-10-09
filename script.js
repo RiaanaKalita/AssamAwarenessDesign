@@ -1,114 +1,332 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tide Turn - Safety</title>
-    <link href="https://googleapis.com" rel="stylesheet"><style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Nunito', sans-serif; background: #e2f1f5; color: #333; padding: 15px; }
-        header { background: #2b5c8f; padding: 10px; color: #fff; margin: -15px -15px 15px; display: flex; justify-content: space-between; align-items: center; }
-        header nav a { color: #fff; text-decoration: none; padding: 4px 8px; font-weight: 700; font-size: 14px; }
-        .act { background: #fff; color: #2b5c8f !important; border-radius: 4px; }
-        .grid { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
-        .card { flex: 1; min-width: 280px; background: #fff; border-radius: 12px; padding: 16px; border: 1px solid #cbd5e0; }
-        .num-row { background: rgba(0,0,0,0.04); padding: 8px; border-radius: 6px; display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 13px; }
-        .btn { width: 100%; text-align: left; padding: 8px; margin-bottom: 4px; font-weight: 700; cursor: pointer; background: #f8fafc; border: 1px solid #cbd5e0; border-radius: 6px; }
-        .cnt { padding: 8px; background: rgba(0,0,0,0.03); display: none; font-size: 13px; border-radius: 6px; }
-        .chk-item { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; padding: 3px 0; }
-    </style>
-</head>
-<body>
-<header>
-    <h3 style="margin-left:8px;">Tide Turn</h3>
-    <nav><a href="index.html">Home</a><a href="info.html">Information</a><a href="safety.html" class="act">Safety</a></nav>
-</header>
-<main style="max-width:950px; margin:0 auto;">
-    <div style="margin-bottom:14px;">
-        <h2 style="font-size:20px; color:#2b5c8f;">Need Help? You're not alone!</h2>
-    </div>
 
-    <div class="grid">
-        <!-- EMERGENCY CALL HELPLINES -->
-        <div class="card" style="background:#9cd4e4;">
-            <h4 style="margin-bottom:8px;">Emergency Numbers</h4>
-            <div class="num-row"><b>National Call:</b><span style="color:red; font-weight:700;">112</span></div>
-            <div class="num-row"><span>Police Force:</span><span>100</span></div>
-            <div class="num-row"><span>Fire Response:</span><span>101</span></div>
-            <div class="num-row"><span>NDRF Control:</span><span>011-23438091</span></div>
-            <div class="num-row"><span>Disaster Mgmt:</span><span>1078</span></div>
-            <div class="num-row"><span>Assam Room:</span><span style="color:green; font-weight:700;">1070</span></div>
-        </div>
-
-        <!-- MEDICAL LOCATOR ARCHITECTURE -->
-        <div class="card" style="background:#9ac7d6;">
-            <h4>Hospital Locator</h4>
-            <select id="sel" onchange="smap()" style="width:100%; padding:6px; border-radius:6px; margin:6px 0; border:1px solid #cbd5e0; outline:none; font-size:13px; font-weight:600;">
-                <option value="g">Guwahati Hub</option>
-                <option value="d">Dibrugarh District</option>
-                <option value="j">Jorhat Hub</option>
-            </select>
-            <div style="height:100px; margin-bottom:6px; border:2px solid #fff; border-radius:6px; overflow:hidden;">
-                <iframe id="mp" style="width:100%; height:100%; border:none;" src="https://google.com"></iframe>
-            </div>
-            <div style="font-size:12px; display:flex; align-items:center; background:rgba(255,255,255,0.4); padding:6px; border-radius:6px;">
-                <div style="flex:1;"><b id="h-n">Gauhati Medical College</b><br><span id="h-a" style="font-size:11px; color:#4a5568;">Bhangagarh, Guwahati</span></div>
-                <a id="h-l" href="tel:03612134567" style="background:green; color:#fff; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none;">📞</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="grid">
-        <!-- THREE-STEP ACTION PROTOCOLS -->
-        <div class="card">
-            <h4 style="margin-bottom:6px;">Emergency Procedures</h4>
-            <button class="btn" onclick="tgl('p1')">Before Flood ▾</button>
-            <div id="p1" class="cnt" style="display:block;"><p>• Pre-map paths to community shelters.</p><p>• Pack core files in waterproof sleeves.</p><p>• Clear residential drain lines early.</p></div>
-            <button class="btn" onclick="tgl('p2')">During Flood ▾</button>
-            <div id="p2" class="cnt"><p>• Cut main power grid connections.</p><p>• Avoid crossing flowing log currents.</p><p>• Sound whistles to locate rescue lines.</p></div>
-            <button class="btn" onclick="tgl('p3')">After Flood ▾</button>
-            <div id="p3" class="cnt"><p>• Verify walls for active foundational splits.</p><p>• Boil or filter all drinking water tap lines.</p></div>
-        </div>
-
-        <!-- ESSENTIAL KIT CHECKLIST -->
-        <div class="card" style="background:#e99a8f;">
-            <h4 style="margin-bottom:6px;">Kit Checklist</h4>
-            <div style="display:flex; flex-direction:column; gap:4px;">
-                <label class="chk-item"><input type="checkbox"> <span>Water supply (3L per person daily)</span></label>
-                <label class="chk-item"><input type="checkbox"> <span>Ready shelf rations & dry food</span></label>
-                <label class="chk-item"><input type="checkbox"> <span>First-aid kit + pill packages</span></label>
-                <label class="chk-item"><input type="checkbox"> <span>Flashlight beam + battery blocks</span></label>
-                <label class="chk-item"><input type="checkbox"> <span>High-decibel signaling whistle</span></label>
-            </div>
-        </div>
-
-        <!-- VIDEO LOG BOX -->
-        <div class="card" style="padding:0; overflow:hidden; display:flex; flex-direction:column;">
-            <div style="position:relative; padding-bottom:56.25%; height:0; background:#2d3748; flex-grow:1;">
-                <iframe style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;" src="https://youtube.com" allowfullscreen></iframe>
-            </div>
-            <p style="font-size:12px; padding:6px; font-weight:700;">Assam Crisis Broadcast Log</p>
-        </div>
-    </div>
-
-    <!-- RADAR MAP AND LOG WRAPPER -->
-    <div class="grid">
-        <div class="card" style="padding:0; height:130px; overflow:hidden;"><iframe style="width:100%; height:100%; border:none;" src="https://windy.com"></iframe></div>
-        <div class="card" style="background:#cfdfcc; font-size:12px;">
-            <b>Latest Updates:</b>
-            <div style="margin-top:4px; border-bottom:1px solid #b2c9b0; padding-bottom:2px;">• Brahmaputra warning system points remain active.</div>
-            <div style="margin-top:2px;">• Relief supplies heading to downstream warehouse posts.</div>
-        </div>
-    </div>
-</main>
-<script>
-function tgl(id){var n=document.getElementById(id); n.style.display=(n.style.display==='none'||n.style.display==='')?'block':'none'}
-const hps={
-    g:{n:"Gauhati Medical College",a:"Bhangagarh, Guwahati, Assam",p:"tel:03612134567",q:"Guwahati%20Medical%20Hospital"},
-    d:{n:"Assam Medical College",a:"Barbari, Dibrugarh, Assam",p:"tel:03732300080",q:"Assam%20Medical%20College"},
-    j:{n:"Jorhat Medical College",a:"Kushani Path, Jorhat, Assam",p:"tel:03762370044",q:"Jorhat%20Medical%20College"}
+const safetyGuides = {
+  before: [
+    ["01", "Follow official alerts", "Check weather warnings and updates from local authorities."],
+    ["02", "Know your evacuation route", "Learn how to reach a designated shelter from your home."],
+    ["03", "Prepare an emergency kit", "Pack water, safe food, a torch, a first-aid kit and essential supplies."],
+    ["04", "Protect important documents", "Keep necessary papers in waterproof packaging."],
+    ["05", "Plan family communication", "Agree on a meeting point and a way to contact each other."],
+    ["06", "Charge essential devices", "Charge phones and power banks when it is safe to do so."],
+    ["07", "Protect electrical safety", "Ask an adult or qualified professional how to safely isolate electricity if advised."],
+    ["08", "Keep medicines accessible", "Prepare essential medicines and medical information with a responsible adult."]
+  ],
+  during: [
+    ["01", "Follow evacuation instructions", "Move to the designated safe place when authorities tell you to leave."],
+    ["02", "Stay away from floodwater", "Do not walk, swim or drive through floodwater."],
+    ["03", "Move to safer ground", "If water rises, follow official instructions to reach a safer location."],
+    ["04", "Avoid electrical hazards", "Keep away from fallen power lines and electrical equipment exposed to water."],
+    ["05", "Keep informed", "Listen to official alerts and updates when available."],
+    ["06", "Keep your family together", "Follow your family's emergency plan and stay with a trusted adult."],
+    ["07", "Use safe drinking water", "Use bottled or officially confirmed safe water."],
+    ["08", "Ask for help safely", "Contact emergency services or local authorities if you need assistance."]
+  ],
+  after: [
+    ["01", "Wait for official clearance", "Return only when authorities say the area is safe."],
+    ["02", "Avoid standing water", "It may hide hazards, sharp objects or electrical dangers."],
+    ["03", "Check drinking water", "Do not drink water unless it is confirmed safe."],
+    ["04", "Avoid damaged buildings", "Stay away until the structure has been declared safe."],
+    ["05", "Be careful with electricity", "Never touch wet electrical equipment; get qualified assistance."],
+    ["06", "Clean safely", "Follow public health guidance and use suitable protection with adult help."],
+    ["07", "Seek medical help when needed", "Get advice for injuries, illness or possible contaminated-water exposure."],
+    ["08", "Document damage safely", "If safe, record damage for family records or official assistance requests."]
+  ]
 };
-function smap(){var v=document.getElementById('sel').value,t=hps[v]; if(t){document.getElementById('h-n').innerText=t.n; document.getElementById('h-a').innerText=t.a; document.getElementById('h-l').href=t.p; document.getElementById('mp').src='https://google.com'}}
-</script>
-</body>
-</html>
+
+const safetyPanel = document.getElementById("safetyPanel");
+const stageButtons = document.querySelectorAll("[data-stage]");
+
+function showSafetyStage(stage) {
+  safetyPanel.innerHTML = safetyGuides[stage].map(([number, title, description]) => `
+    <article class="safety-step">
+      <span class="step-number">${number}</span>
+      <div>
+        <h3>${title}</h3>
+        <p>${description}</p>
+      </div>
+    </article>
+  `).join("");
+
+  stageButtons.forEach(button => {
+    const active = button.dataset.stage === stage;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+}
+
+stageButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    showSafetyStage(button.dataset.stage);
+  });
+});
+
+showSafetyStage("before");
+
+// Emergency kit checklist
+const kitItems = [
+  "Drinking water and safe, non-perishable food",
+  "Torch and spare batteries",
+  "First-aid kit",
+  "Essential medicines",
+  "Phone and charged power bank",
+  "Copies of important documents in waterproof packaging",
+  "Soap, hand sanitiser and basic hygiene supplies",
+  "A whistle and essential family contact information"
+];
+
+const kitChecklist = document.getElementById("kitChecklist");
+const kitProgress = document.getElementById("kitProgress");
+const kitCount = document.getElementById("kitCount");
+
+kitChecklist.innerHTML = kitItems.map((item, index) => `
+  <label class="check-item">
+    <input type="checkbox" class="kit-checkbox" id="kit-${index}">
+    <span>${item}</span>
+  </label>
+`).join("");
+
+function updateKitProgress() {
+  const boxes = [...document.querySelectorAll(".kit-checkbox")];
+  const checked = boxes.filter(box => box.checked).length;
+  kitProgress.style.width = `${(checked / boxes.length) * 100}%`;
+  kitCount.textContent = `${checked} of ${boxes.length} items ready`;
+}
+
+kitChecklist.addEventListener("change", updateKitProgress);
+
+document.getElementById("resetKit").addEventListener("click", () => {
+  document.querySelectorAll(".kit-checkbox").forEach(box => {
+    box.checked = false;
+  });
+  updateKitProgress();
+});
+
+updateKitProgress();
+
+// Mobile navigation
+const menuToggle = document.getElementById("menuToggle");
+const mainNav = document.getElementById("mainNav");
+
+menuToggle.addEventListener("click", () => {
+  const isOpen = mainNav.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute(
+    "aria-label",
+    isOpen ? "Close navigation" : "Open navigation"
+  );
+  menuToggle.textContent = isOpen ? "✕" : "☰";
+});
+
+mainNav.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    mainNav.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Open navigation");
+    menuToggle.textContent = "☰";
+  });
+});
+
+// External clinic locator
+const locationInput = document.getElementById("locationInput");
+const clinicSearch = document.getElementById("clinicSearch");
+
+function searchClinics(place) {
+  const cleanedPlace = place.trim();
+
+  if (!cleanedPlace) {
+    locationInput.focus();
+    locationInput.setCustomValidity("Enter a town or area in Assam first.");
+    locationInput.reportValidity();
+    return;
+  }
+
+  locationInput.setCustomValidity("");
+
+  const query = `${cleanedPlace}, Assam, India hospitals and clinics`;
+  const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+locationInput.addEventListener("input", () => {
+  locationInput.setCustomValidity("");
+});
+
+clinicSearch.addEventListener("click", () => {
+  searchClinics(locationInput.value);
+});
+
+locationInput.addEventListener("keydown", event => {
+  if (event.key === "Enter") {
+    searchClinics(locationInput.value);
+  }
+});
+
+document.querySelectorAll("[data-place]").forEach(button => {
+  button.addEventListener("click", () => {
+    const place = button.dataset.place;
+    locationInput.value = place.replace(" hospitals", "");
+    searchClinics(place);
+  });
+});
+
+// Five-question flood safety quiz
+const quizQuestions = [
+  {
+    question: "1. What should you do if authorities order an evacuation?",
+    options: [
+      "Wait until water reaches your home",
+      "Follow instructions and move to the designated safe place",
+      "Go closer to the river to inspect the water"
+    ],
+    answer: 1,
+    explanation: "Follow official evacuation instructions promptly."
+  },
+  {
+    question: "2. Is it safe to walk or drive through floodwater?",
+    options: [
+      "Yes, if it looks shallow",
+      "Yes, if other people are crossing",
+      "No. Stay away from floodwater"
+    ],
+    answer: 2,
+    explanation: "Floodwater can conceal hazards and move more strongly than it appears."
+  },
+  {
+    question: "3. Which is useful in an emergency kit?",
+    options: [
+      "A torch and first-aid supplies",
+      "Only decorative items",
+      "An empty water bottle with no plan to refill it safely"
+    ],
+    answer: 0,
+    explanation: "A torch, first-aid supplies, safe water and other essentials can help you prepare."
+  },
+  {
+    question: "4. When should you return to a flooded area?",
+    options: [
+      "As soon as the rain stops",
+      "When neighbours begin returning",
+      "Only after authorities confirm it is safe"
+    ],
+    answer: 2,
+    explanation: "Floodwater may leave hidden hazards even after rain stops."
+  },
+  {
+    question: "5. Where should you verify official Assam flood updates?",
+    options: [
+      "An unverified social media post",
+      "The Assam State Disaster Management Authority",
+      "A random forwarded message"
+    ],
+    answer: 1,
+    explanation: "Use official government sources and follow local authority instructions."
+  }
+];
+
+const quizArea = document.getElementById("quizArea");
+const quizProgress = document.getElementById("quizProgress");
+let currentQuestion = 0;
+let quizScore = 0;
+let quizAnswered = false;
+
+function startQuiz() {
+  currentQuestion = 0;
+  quizScore = 0;
+  quizAnswered = false;
+  renderQuestion();
+}
+
+function renderQuestion() {
+  quizAnswered = false;
+  const item = quizQuestions[currentQuestion];
+
+  quizProgress.style.width =
+    `${(currentQuestion / quizQuestions.length) * 100}%`;
+
+  quizArea.innerHTML = `
+    <p class="small-note">Question ${currentQuestion + 1} of ${quizQuestions.length}</p>
+    <h3>${item.question}</h3>
+    <div id="quizOptions">
+      ${item.options.map((option, index) => `
+        <button class="quiz-option" data-answer="${index}">
+          ${option}
+        </button>
+      `).join("")}
+    </div>
+    <div id="quizFeedback" aria-live="polite"></div>
+    <button class="button button-primary" id="nextQuestion" hidden>
+      ${currentQuestion === quizQuestions.length - 1 ? "See results" : "Next question →"}
+    </button>
+  `;
+
+  quizArea.querySelectorAll("[data-answer]").forEach(button => {
+    button.addEventListener("click", () => {
+      answerQuestion(Number(button.dataset.answer));
+    });
+  });
+
+  document.getElementById("nextQuestion").addEventListener("click", () => {
+    if (currentQuestion < quizQuestions.length - 1) {
+      currentQuestion++;
+      renderQuestion();
+    } else {
+      showQuizResults();
+    }
+  });
+}
+
+function answerQuestion(selectedIndex) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+
+  const item = quizQuestions[currentQuestion];
+  const correct = selectedIndex === item.answer;
+
+  if (correct) quizScore++;
+
+  quizArea.querySelectorAll("[data-answer]").forEach(button => {
+    button.disabled = true;
+    const index = Number(button.dataset.answer);
+
+    if (index === item.answer) {
+      button.classList.add("correct");
+    } else if (index === selectedIndex) {
+      button.classList.add("incorrect");
+    }
+  });
+
+  document.getElementById("quizFeedback").innerHTML = `
+    <p class="quiz-feedback">
+      <strong>${correct ? "Correct!" : "Not quite."}</strong>
+      ${item.explanation}
+    </p>
+  `;
+
+  document.getElementById("nextQuestion").hidden = false;
+  quizProgress.style.width =
+    `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
+}
+
+function showQuizResults() {
+  quizProgress.style.width = "100%";
+
+  let message;
+  if (quizScore === 5) {
+    message = "Excellent! You answered every question correctly.";
+  } else if (quizScore >= 3) {
+    message = "Good effort! Review any answers you missed.";
+  } else {
+    message = "Keep learning! Revisit the safety guide and try again.";
+  }
+
+  quizArea.innerHTML = `
+    <span class="eyebrow">QUIZ COMPLETE</span>
+    <h3>You scored ${quizScore} out of ${quizQuestions.length}</h3>
+    <p>${message}</p>
+    <button class="button button-primary" id="retryQuiz">Try again ↻</button>
+  `;
+
+  document.getElementById("retryQuiz").addEventListener("click", startQuiz);
+}
+
+document.getElementById("startQuiz").addEventListener("click", startQuiz);
