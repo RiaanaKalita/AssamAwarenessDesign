@@ -7,9 +7,9 @@ function showPage(name) {
   if (!target) return;
   $$('.page').forEach(p => p.classList.toggle('active', p === target));
   $$('.nav-link').forEach(b => b.classList.toggle('active', b.dataset.page === name));
-  if (name === 'tracker' && window.floodMap) setTimeout(() => floodMap.invalidateSize(), 100);
-  if (name === 'help' && window.clinicMap) setTimeout(() => clinicMap.invalidateSize(), 100);
-  if (name === 'information' && window.populationChart) setTimeout(() => populationChart.resize(), 100);
+  if (name === 'tracker' && floodMap) setTimeout(() => floodMap.invalidateSize(), 180);
+  if (name === 'help' && clinicMap) setTimeout(() => clinicMap.invalidateSize(), 180);
+  if (name === 'information' && populationChart) setTimeout(() => populationChart.resize(), 180);
 }
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-page]');
@@ -226,4 +226,16 @@ window.addEventListener('resize',()=>{
  if(floodMap)floodMap.invalidateSize();
  if(clinicMap)clinicMap.invalidateSize();
  if(populationChart)populationChart.resize();
+});
+
+// Resize map canvases after their hidden sections become visible.
+document.addEventListener('click', e => {
+ const btn=e.target.closest('[data-page]');
+ if(!btn) return;
+ const page=btn.dataset.page;
+ requestAnimationFrame(()=>{
+   if(page==='tracker' && floodMap) floodMap.invalidateSize();
+   if(page==='help' && clinicMap) clinicMap.invalidateSize();
+   if(page==='information' && populationChart) populationChart.resize();
+ });
 });

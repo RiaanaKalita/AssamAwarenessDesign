@@ -1,27 +1,29 @@
-# Tide Turn — Flood Safety Website
+TIDE TURN — Flood Safety Website
 
-## Files
-- `index.html` — page structure and content
-- `style.css` — responsive ocean-inspired layout
-- `script.js` — navigation, safety tabs, kit checklist, charts, maps and quiz
-- `assets/hero-flood.jpg` — cropped hero image from the user's B4 planning design
+FILES
+- index.html: all page content and structure
+- style.css: colour palette, layout and responsive styling
+- script.js: navigation, safety tabs, emergency kit checklist, chart, maps and quiz
+- assets/hero-flood.jpg: fallback hero image (the homepage also uses a higher-resolution Wikimedia Commons photo online)
 
-## Run it
-1. Keep the files in this same folder.
-2. Open `index.html` in a browser for a basic preview. Some map/data features may be blocked by local-file browser restrictions.
-3. For the full experience, publish the folder to GitHub Pages or use a local static server.
-4. In GitHub, upload all files and the `assets` folder to the repository root. Enable Pages in repository Settings → Pages.
+HOW TO RUN
+1. Keep index.html, style.css and script.js in the same folder.
+2. Keep the assets folder beside those three files.
+3. Open index.html in a browser, or upload all files/folders to the same GitHub Pages repository.
+4. The site needs an internet connection for Leaflet/OpenStreetMap, Chart.js, fonts and the external flood photographs.
 
-## Data accuracy and limitations
-- The chart shows historical annual population-affected figures for Assam, in lakh, from ASDMA annual activity report and official flood memoranda. The chart is historical, not a live reading.
-- Sources are linked within the Information page:
-  - ASDMA Annual Activity Report 2020–21 to 2023–24
-  - Assam Flood Memorandum 2023
-  - Assam Flood Memorandum 2024
-- The interactive street maps use OpenStreetMap. The optional NASA GIBS layer is satellite imagery for context; it does **not** detect or forecast floods automatically.
-- The clinic locator queries Nominatim and Overpass/OpenStreetMap data. Coverage may be incomplete and these services can throttle requests. It is not an emergency dispatch system.
-- Emergency numbers are provided for learning and quick reference. Some state/district contacts and service availability can change; verify locally. In an immediate emergency, use the official number available in your location and follow local authorities.
-- The website does not upload or store medical files. It only provides a checklist reminding users to keep copies securely.
+FUNCTIONAL FEATURES
+- Four home feature cards navigate to the map, information, quiz and help pages.
+- Flood map uses Leaflet and OpenStreetMap street tiles, can be zoomed/panned, and has a Zoom to Assam button. The optional NASA satellite layer is imagery only, not live flood detection.
+- Clinic locator uses Nominatim and Overpass OpenStreetMap data; results may be incomplete or unavailable during service throttling.
+- Quiz has five questions, answer feedback, score, progress and restart.
+- Safety tabs switch between before/during/after guidance; emergency-kit checkboxes update progress.
+- Information chart shows historical annual reported figures, not live readings.
 
-## Third-party services
-Google Fonts, Leaflet, Chart.js, OpenStreetMap, NASA GIBS, Nominatim and Overpass require an internet connection. If a third-party service is down, other parts of the site should remain usable.
+IMAGE CREDITS
+The two Assam flood photographs are hosted by Wikimedia Commons:
+- “Assam flood in 2015” by Pradip Nemane, CC BY-SA 4.0: https://commons.wikimedia.org/wiki/File:Assam_flood_in_2015.jpg
+- “Flood affected village” by KEmel49, CC BY-SA 4.0: https://commons.wikimedia.org/wiki/File:Flood_affected_village.jpg
+
+IMPORTANT
+This is an educational school project, not an emergency dispatch system. Use official government alerts and follow local authorities during an actual emergency. Emergency numbers and clinic listings should be verified before use.
