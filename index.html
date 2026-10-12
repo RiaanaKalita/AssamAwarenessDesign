@@ -1,168 +1,758 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0E4C92">
-  <title>Tide Turn | Safer Communities, Stronger Tomorrows</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="#0E4C92" name="theme-color"/>
+  <title>
+   Tide Turn | Safer Communities, Stronger Tomorrows
+  </title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&amp;family=Nunito+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
+  <link href="style.css" rel="stylesheet"/>
+ </head>
+ <body>
   <div class="app-shell">
-    <header class="topbar">
-      <button class="brand" data-page="home" aria-label="Tide Turn home">
-        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 44 32" role="img"><path d="M4 18 13 5 22 18Z" fill="#fff"/><path d="M23 18 31 8 40 18Z" fill="#89CFEF"/><path d="M4 20 22 26 40 20 34 27 10 27Z" fill="#fff"/><path d="M3 30c6-3 11-3 17 0s11 3 21 0" fill="none" stroke="#89CFEF" stroke-width="2.5" stroke-linecap="round"/></svg></span><span>TIDE TURN</span>
-      </button>
-      <nav class="main-nav" aria-label="Main navigation">
-        <button class="nav-link active" data-page="home">Home</button>
-        <button class="nav-link" data-page="information">Information</button>
-        <button class="nav-link" data-page="safety">Safety</button>
-      </nav>
-      <button class="nav-help" data-page="help"><span>✚</span> Get help</button>
-    </header>
-
-    <main class="view-stack">
-      <section class="page active" id="page-home" aria-labelledby="home-title">
-        <div class="hero">
-          <div class="hero-shade"></div>
-          <div class="hero-copy">
-            <p class="eyebrow">FLOOD AWARENESS • ASSAM & BEYOND</p>
-            <h1 id="home-title">Safer Communities,<br>Stronger Tomorrows</h1>
-            <button class="coral-button" data-page="safety">Explore safety <span>↗</span></button>
-          </div>
-          <div class="hero-note">Be aware.<br>Be prepared. Be safe.</div>
+   <header class="topbar">
+    <button aria-label="Tide Turn home" class="brand" data-page="home">
+     <span aria-hidden="true" class="brand-mark">
+      <svg role="img" viewbox="0 0 44 32">
+       <path d="M4 18 13 5 22 18Z" fill="#fff">
+       </path>
+       <path d="M23 18 31 8 40 18Z" fill="#89CFEF">
+       </path>
+       <path d="M4 20 22 26 40 20 34 27 10 27Z" fill="#fff">
+       </path>
+       <path d="M3 30c6-3 11-3 17 0s11 3 21 0" fill="none" stroke="#89CFEF" stroke-linecap="round" stroke-width="2.5">
+       </path>
+      </svg>
+     </span>
+     <span>
+      TIDE TURN
+     </span>
+    </button>
+    <nav aria-label="Main navigation" class="main-nav">
+     <button class="nav-link active" data-page="home">
+      Home
+     </button>
+     <button class="nav-link" data-page="information">
+      Information
+     </button>
+     <button class="nav-link" data-page="safety">
+      Safety
+     </button>
+    </nav>
+   </header>
+   <main class="view-stack">
+    <section aria-labelledby="home-title" class="page active" id="page-home">
+     <div aria-label="Flood awareness in Assam" class="hero">
+      <img alt="Flooding in Assam, showing the effect of rising water on a community" class="hero-photo" data-fallback="assets/flood-community.svg" loading="eager" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Assam_flood_in_2015.jpg"/>
+      <div class="hero-shade">
+      </div>
+      <div class="hero-copy">
+       <p class="eyebrow">
+        FLOOD AWARENESS &bull; ASSAM &amp; BEYOND
+       </p>
+       <h1 id="home-title">
+        Safer Communities,
+        <br/>
+        Stronger Tomorrows
+       </h1>
+       <button class="coral-button" data-page="safety">
+        Explore safety
+        <span>
+         &nearrow;
+        </span>
+       </button>
+      </div>
+      <div class="hero-note">
+       Be aware.
+       <br/>
+       Be prepared. Be safe.
+      </div>
+     </div>
+     <div class="home-content">
+      <div class="home-heading">
+       <div>
+        <p class="eyebrow">
+         WELCOME TO TIDE TURN
+        </p>
+        <h2>
+         What would you like to do?
+        </h2>
+       </div>
+       <p class="muted home-intro">
+        Clear information for safer choices &mdash; before, during and after a flood.
+       </p>
+      </div>
+      <div class="feature-grid">
+       <article class="feature-card feature-blue">
+        <div class="feature-icon">
+         🌏
         </div>
-        <div class="home-content">
-          <div class="home-heading">
-            <div><p class="eyebrow">WELCOME TO TIDE TURN</p><h2>What would you like to do?</h2></div>
-            <p class="muted home-intro">Clear information for safer choices — before, during and after a flood.</p>
-          </div>
-          <div class="feature-grid">
-            <article class="feature-card feature-blue">
-              <div class="feature-icon">🌏</div><h3>Flood tracker</h3><p>Explore a world map and Assam-focused satellite view.</p>
-              <button class="feature-action" data-page="tracker">Open map <span>→</span></button>
-            </article>
-            <article class="feature-card feature-green">
-              <div class="feature-icon">▤</div><h3>Info & data</h3><p>Understand the real impact of floods through sourced figures.</p>
-              <button class="feature-action" data-page="information">View information <span>→</span></button>
-            </article>
-            <article class="feature-card feature-coral">
-              <div class="feature-icon">✓</div><h3>Quizzes</h3><p>Test your knowledge and practise safer decisions.</p>
-              <button class="feature-action" data-page="quiz">Take the quiz <span>→</span></button>
-            </article>
-            <article class="feature-card feature-lilac">
-              <div class="feature-icon">✚</div><h3>Get help</h3><p>Find emergency contacts and nearby medical facilities.</p>
-              <button class="feature-action" data-page="help">Find help <span>→</span></button>
-            </article>
-          </div>
-          <aside class="about-card"><div class="about-avatar" aria-hidden="true"><svg viewBox="0 0 80 80"><circle cx="40" cy="25" r="14" fill="#fff"/><path d="M14 72c2-19 12-29 26-29s24 10 26 29" fill="#fff"/><path d="M24 13c5-7 12-10 20-7" fill="none" stroke="#d6edf7" stroke-width="4" stroke-linecap="round"/></svg></div><p class="eyebrow">ABOUT US</p><h3>Prepared together.</h3><p>Tide Turn helps students and families understand flood risks and make safer, informed choices.</p><button class="about-link" data-page="information">Why it matters <span>→</span></button></aside>
-          <div class="home-bottom"><span>Preparedness starts with information.</span><span class="wave-art" aria-hidden="true"><svg viewBox="0 0 500 45" preserveAspectRatio="none"><path d="M0 17 Q12 2 25 17 T50 17 T75 17 T100 17 T125 17 T150 17 T175 17 T200 17 T225 17 T250 17 T275 17 T300 17 T325 17 T350 17 T375 17 T400 17 T425 17 T450 17 T475 17 T500 17"/><path d="M0 29 Q12 14 25 29 T50 29 T75 29 T100 29 T125 29 T150 29 T175 29 T200 29 T225 29 T250 29 T275 29 T300 29 T325 29 T350 29 T375 29 T400 29 T425 29 T450 29 T475 29 T500 29"/></svg></span></div>
+        <h3>
+         Flood tracker
+        </h3>
+        <p>
+         Explore a world map and Assam-focused satellite view.
+        </p>
+        <button class="feature-action" data-page="safety" data-scroll="flood-map-section">
+         Open map
+         <span>
+          &rarr;
+         </span>
+        </button>
+       </article>
+       <article class="feature-card feature-green">
+        <div class="feature-icon">
+         ▤
         </div>
-      </section>
-
-      <section class="page" id="page-safety" aria-labelledby="safety-title">
-        <div class="section-banner safety-banner">
-          <div><p class="eyebrow">PRACTICAL GUIDANCE</p><h1 id="safety-title">Need help? You're not alone.</h1><p>Choose a stage to see clear, practical steps.</p></div>
-          <div class="banner-illustration" aria-hidden="true">⌂　♡　✚</div>
+        <h3>
+         Info &amp; data
+        </h3>
+        <p>
+         Understand the real impact of floods through sourced figures.
+        </p>
+        <button class="feature-action" data-page="information">
+         View information
+         <span>
+          &rarr;
+         </span>
+        </button>
+       </article>
+       <article class="feature-card feature-coral">
+        <div class="feature-icon">
+         &checkmark;
         </div>
-        <div class="safety-layout">
-          <div class="safety-main panel">
-            <div class="tab-row" role="tablist" aria-label="Flood stage">
-              <button class="stage-tab selected" role="tab" aria-selected="true" data-stage="before">Before a flood</button>
-              <button class="stage-tab" role="tab" aria-selected="false" data-stage="during">During a flood</button>
-              <button class="stage-tab" role="tab" aria-selected="false" data-stage="after">After a flood</button>
-            </div>
-            <div id="stageContent" class="step-list"></div>
-          </div>
-          <aside class="kit-panel panel">
-            <div class="panel-title"><div><p class="eyebrow">GET READY</p><h2>Emergency kit</h2></div><span class="kit-bag">＋</span></div>
-            <p class="muted small">Tick items as you pack them. Your progress stays on this page only.</p>
-            <div id="kitList" class="kit-list"></div>
-            <div class="progress-track"><span id="kitProgress"></span></div>
-            <p class="small muted" id="kitCount">0 of 8 packed</p>
-            <div class="medical-note"><strong>Medical documents</strong><p>Keep copies of prescriptions, allergies, blood group and key medical records in a waterproof pouch. Avoid uploading sensitive documents to this demo website.</p></div>
-          </aside>
+        <h3>
+         Quizzes
+        </h3>
+        <p>
+         Test your knowledge and practise safer decisions.
+        </p>
+        <button class="feature-action" data-page="information" data-scroll="information-quiz">
+         Take the quiz
+         <span>
+          &rarr;
+         </span>
+        </button>
+       </article>
+       <article class="feature-card feature-lilac">
+        <div class="feature-icon">
+         ✚
         </div>
-        <div class="safety-resources">
-          <div class="resource-photo"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/Flood_affected_village.jpg/1280px-Flood_affected_village.jpg" alt="Floodwater around a home in Assam" loading="lazy"><div><span class="eyebrow">WHY PREPARE?</span><h3>Floods can change familiar routes quickly.</h3><p>Plan ahead, keep essentials ready and use official warnings rather than trying to judge water depth yourself.</p></div></div>
-          <div class="resource-links"><p class="eyebrow">LATEST UPDATES</p><h3>Check official information</h3><a href="https://www.asdma.gov.in/reports.html" target="_blank" rel="noopener">ASDMA reports and updates ↗</a><a href="https://ndma.gov.in/" target="_blank" rel="noopener">National Disaster Management Authority ↗</a><button class="feature-action" data-page="tracker">Open flood map <span>→</span></button></div>
+        <h3>
+         Get help
+        </h3>
+        <p>
+         Find emergency contacts and nearby medical facilities.
+        </p>
+        <button class="feature-action" data-page="safety" data-scroll="clinic-locator">
+         Find help
+         <span>
+          &rarr;
+         </span>
+        </button>
+       </article>
+      </div>
+      <div aria-label="Flood photographs" class="home-photo-row">
+       <figure class="home-photo-card">
+        <img alt="Floodwater in Assam" data-fallback="assets/flood-community.svg" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Assam_flood_in_2015.jpg"/>
+        <figcaption>
+         <strong>
+          Floodwater in Assam
+         </strong>
+         <span>
+          Rising water can disrupt homes and daily life.
+         </span>
+        </figcaption>
+       </figure>
+       <figure class="home-photo-card">
+        <img alt="Communities at risk" data-fallback="assets/flood-village.svg" loading="lazy" src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&amp;fit=crop&amp;w=900&amp;q=80"/>
+        <figcaption>
+         <strong>
+          Communities at risk
+         </strong>
+         <span>
+          Preparedness helps families make safer choices.
+         </span>
+        </figcaption>
+       </figure>
+       <figure class="home-photo-card">
+        <img alt="Understand the warning signs" data-fallback="assets/flood-community.svg" loading="lazy" src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&amp;fit=crop&amp;w=900&amp;q=80"/>
+        <figcaption>
+         <strong>
+          Understand the warning signs
+         </strong>
+         <span>
+          Use official alerts and avoid entering floodwater.
+         </span>
+        </figcaption>
+       </figure>
+      </div>
+      <aside class="about-card">
+       <div aria-hidden="true" class="about-avatar">
+        <svg viewbox="0 0 80 80">
+         <circle cx="40" cy="25" fill="#fff" r="14">
+         </circle>
+         <path d="M14 72c2-19 12-29 26-29s24 10 26 29" fill="#fff">
+         </path>
+         <path d="M24 13c5-7 12-10 20-7" fill="none" stroke="#d6edf7" stroke-linecap="round" stroke-width="4">
+         </path>
+        </svg>
+       </div>
+       <p class="eyebrow">
+        ABOUT US
+       </p>
+       <h3>
+        Prepared together.
+       </h3>
+       <p>
+        Tide Turn helps students and families understand flood risks and make safer, informed choices.
+       </p>
+       <button class="about-link" data-page="information">
+        Why it matters
+        <span>
+         &rarr;
+        </span>
+       </button>
+      </aside>
+      <div class="home-bottom">
+       <span>
+        Preparedness starts with information.
+       </span>
+       <span aria-hidden="true" class="wave-art">
+        <svg preserveaspectratio="none" viewbox="0 0 500 45">
+         <path d="M0 17 Q12 2 25 17 T50 17 T75 17 T100 17 T125 17 T150 17 T175 17 T200 17 T225 17 T250 17 T275 17 T300 17 T325 17 T350 17 T375 17 T400 17 T425 17 T450 17 T475 17 T500 17">
+         </path>
+         <path d="M0 29 Q12 14 25 29 T50 29 T75 29 T100 29 T125 29 T150 29 T175 29 T200 29 T225 29 T250 29 T275 29 T300 29 T325 29 T350 29 T375 29 T400 29 T425 29 T450 29 T475 29 T500 29">
+         </path>
+        </svg>
+       </span>
+      </div>
+     </div>
+    </section>
+    <section aria-labelledby="safety-title" class="page" id="page-safety">
+     <div class="section-banner safety-banner">
+      <div>
+       <p class="eyebrow">
+        PRACTICAL GUIDANCE
+       </p>
+       <h1 id="safety-title">
+        Need help? You're not alone.
+       </h1>
+       <p>
+        Choose a stage to see clear, practical steps.
+       </p>
+      </div>
+      <div aria-hidden="true" class="banner-illustration">
+       ⌂　♡　✚
+      </div>
+     </div>
+     <div class="locator-heading">
+      <h2>
+       Find flood information and medical help
+      </h2>
+      <p>
+       Explore the map and search nearby health facilities. Listings and imagery may be incomplete, so follow official local instructions.
+      </p>
+     </div>
+     <div aria-label="Flood map and clinic locator" class="locator-grid">
+      <div class="panel map-panel" id="flood-map-section">
+       <div class="map-panel-head">
+        <div>
+         <h2>
+          Flood map
+         </h2>
+         <p class="muted small">
+          Interactive map &middot; OpenStreetMap
+         </p>
         </div>
-        <div class="source-note">Safety guidance: follow local authorities and official warnings first. This learning website is not an emergency dispatch service.</div>
-      </section>
-
-      <section class="page" id="page-information" aria-labelledby="info-title">
-        <div class="info-heading">
-          <div><p class="eyebrow">THE IMPACT IN NUMBERS</p><h1 id="info-title">Understanding Assam's floods</h1><p class="muted">Floods affect people, homes, livelihoods and essential services — and the impact changes every year.</p></div>
-          <div class="year-pill">Official reports · 2020–2024</div>
+        <div class="map-controls">
+         <button class="small-button active" id="baseMapBtn">
+          Street map
+         </button>
+         <button class="small-button" id="satelliteBtn">
+          Satellite layer
+         </button>
         </div>
-        <div class="stat-row">
-          <article class="stat-card"><span class="stat-label">People affected in 2024</span><strong>42.95 lakh</strong><span class="stat-foot">Across 7,794 villages</span></article>
-          <article class="stat-card"><span class="stat-label">Districts affected in 2024</span><strong>35 / 35</strong><span class="stat-foot">All districts reported affected</span></article>
-          <article class="stat-card"><span class="stat-label">Flood waves in 2024</span><strong>3</strong><span class="stat-foot">Reported by the state memorandum</span></article>
+       </div>
+       <div aria-label="Interactive world map" class="map-box" id="floodMap">
+       </div>
+       <div class="map-footer">
+        <span>
+         <b class="legend-dot blue-dot">
+         </b>
+         Map location
+        </span>
+        <span>
+         Use + / &minus; to zoom
+        </span>
+        <button class="text-button" id="assamView">
+         Zoom to Assam &rarr;
+        </button>
+       </div>
+      </div>
+      <article class="panel clinic-panel" id="clinic-locator">
+       <div class="panel-title">
+        <div>
+         <p class="eyebrow">
+          MEDICAL FACILITIES
+         </p>
+         <h2>
+          Clinic &amp; hospital locator
+         </h2>
         </div>
-        <div class="data-grid">
-          <article class="panel chart-panel">
-            <div class="chart-head"><div><p class="eyebrow">YEAR-TO-YEAR COMPARISON</p><h2>People affected by floods</h2><p class="muted small">Assam · people, in lakh · 2020–2024</p></div><span class="chart-chip">Reported figures</span></div>
-            <div class="chart-wrap"><canvas id="populationChart" role="img" aria-label="Bar chart of people affected by floods in Assam from 2020 to 2024, in lakh"></canvas></div>
-            <p class="chart-caption">Each bar represents the population affected during that year, not the number of flood events. Annual figures can vary sharply.</p>
-            <p class="source-note">Source: Assam State Disaster Management Authority (ASDMA), Annual Activity Report 2020–21 to 2023–24; Assam Flood Memoranda 2023 and 2024. Values: 2020 57.89 lakh; 2021 9.10 lakh; 2022 88.5 lakh; 2023 13.47 lakh; 2024 42.95 lakh.</p>
-          </article>
-          <article class="panel insight-panel">
-            <p class="eyebrow">WHAT THE DATA TELLS US</p><h2>One year can look very different from the next.</h2>
-            <p>The reported number of people affected fell between 2020 and 2021, rose sharply in 2022, and rose again in 2024. That is why historical averages alone cannot tell a family what is happening today.</p>
-            <div class="insight-callout"><span class="insight-icon">↗</span><div><strong>Use current local warnings</strong><p>For live updates, check the Assam State Disaster Management Authority's current flood reports and district alerts.</p><a href="https://www.asdma.gov.in/reports.html" target="_blank" rel="noopener">Official ASDMA reports ↗</a></div></div>
-            <div class="mini-facts"><div><strong>2023</strong><span>13.47 lakh people affected</span></div><div><strong>2024</strong><span>42.95 lakh people affected</span></div></div>
-          </article>
+        <span class="round-icon">
+         &target;
+        </span>
+       </div>
+       <p class="muted small">
+        Enter an Assam town or use your device location. Results come from OpenStreetMap contributors and may be incomplete.
+       </p>
+       <form class="search-row" id="clinicForm">
+        <input aria-label="Town or location" id="clinicQuery" placeholder="e.g. Guwahati, Jorhat, Silchar" type="text" value="Guwahati, Assam"/>
+        <button class="primary-button" type="submit">
+         Search
+        </button>
+       </form>
+       <div aria-live="polite" class="clinic-status" id="clinicStatus">
+        Map is ready. Search for a town to find listed facilities.
+       </div>
+       <div aria-label="Embedded clinic locator map" class="clinic-map" id="clinicMap">
+       </div>
+       <div class="clinic-results" id="clinicResults">
+       </div>
+       <p class="source-note">
+        Not an emergency dispatch system. Call ahead when possible; do not rely on map listings alone during a crisis.
+       </p>
+      </article>
+     </div>
+     <div class="safety-lower-grid">
+      <div class="safety-layout safety-guidance-grid">
+       <div class="safety-main panel">
+        <div aria-label="Flood stage" class="tab-row" role="tablist">
+         <button aria-selected="true" class="stage-tab selected" data-stage="before" role="tab">
+          Before a flood
+         </button>
+         <button aria-selected="false" class="stage-tab" data-stage="during" role="tab">
+          During a flood
+         </button>
+         <button aria-selected="false" class="stage-tab" data-stage="after" role="tab">
+          After a flood
+         </button>
         </div>
-        <div class="photo-grid">
-          <figure class="photo-card"><img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Assam_flood_in_2015.jpg" alt="A house partly surrounded by floodwater in Assam" loading="lazy"><figcaption><strong>When rivers rise</strong><span>Floodwater can surround homes and disrupt daily life.</span></figcaption></figure>
-          <figure class="photo-card"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/22/Flood_affected_village.jpg/1280px-Flood_affected_village.jpg" alt="Floodwater surrounding a home and garden in Assam in 2024" loading="lazy"><figcaption><strong>Impact on communities</strong><span>Water can affect homes, roads and access to services.</span></figcaption></figure>
-          <div class="photo-card photo-info"><div class="photo-info-icon">↗</div><h3>Go beyond the numbers</h3><p>Read official reports to understand how floods affect people and communities each year.</p><a href="https://www.asdma.gov.in/reports.html" target="_blank" rel="noopener">Explore ASDMA reports ↗</a><small>Photos: Pradip Nemane and KEmel49, Wikimedia Commons, CC BY-SA 4.0.</small></div>
+        <div class="step-list" id="stageContent">
         </div>
-      </section>
-
-      <section class="page" id="page-tracker" aria-labelledby="tracker-title">
-        <div class="page-title-row"><div><p class="eyebrow">EXPLORE THE MAP</p><h1 id="tracker-title">Flood tracker & satellite view</h1><p class="muted">Zoom, pan and explore. Read the map notes before using it for decisions.</p></div><span class="live-label"><i></i> Map layers</span></div>
-        <div class="map-layout">
-          <div class="panel map-panel"><div class="map-panel-head"><div><h2>World & Assam map</h2><p class="muted small">Interactive map · OpenStreetMap</p></div><div class="map-controls"><button id="baseMapBtn" class="small-button active">Street map</button><button id="satelliteBtn" class="small-button">Satellite layer</button></div></div><div id="floodMap" class="map-box" aria-label="Interactive world map"></div><div class="map-footer"><span><b class="legend-dot blue-dot"></b>Map location</span><span>Use + / − to zoom</span><button id="assamView" class="text-button">Zoom to Assam →</button></div></div>
-          <aside class="map-side">
-            <article class="panel map-info-card"><span class="round-icon">⌖</span><h3>What this map shows</h3><p>Street map data and an optional satellite imagery layer. It does <strong>not</strong> automatically identify active floodwater or predict flooding.</p></article>
-            <article class="panel map-info-card"><span class="round-icon mint">⚑</span><h3>For current warnings</h3><p>Use official district alerts and flood situation reports. Map imagery may be delayed, obscured by clouds, or unavailable.</p><a href="https://www.asdma.gov.in/reports.html" target="_blank" rel="noopener">Open ASDMA flood reports ↗</a></article>
-            <article class="panel map-info-card"><span class="round-icon coral">!</span><h3>Stay cautious</h3><p>Never enter floodwater to check a location. Follow evacuation instructions from local authorities.</p></article>
-          </aside>
+       </div>
+       <aside class="kit-panel panel">
+        <div class="panel-title">
+         <div>
+          <p class="eyebrow">
+           GET READY
+          </p>
+          <h2>
+           Emergency kit
+          </h2>
+         </div>
+         <span class="kit-bag">
+          ＋
+         </span>
         </div>
-        <p class="source-note">Map data © OpenStreetMap contributors. Optional satellite tiles are from NASA GIBS. Satellite imagery is context only, not an official flood alert.</p>
-      </section>
-
-      <section class="page" id="page-help" aria-labelledby="help-title">
-        <div class="section-banner help-banner"><div><p class="eyebrow">HELP & HEALTH</p><h1 id="help-title">Quick access when it matters.</h1><p>Keep emergency contacts visible and search for medical facilities on the embedded map.</p></div><div class="banner-illustration">✚　⌖</div></div>
-        <div class="help-layout">
-          <article class="panel contacts-panel"><div class="panel-title"><div><p class="eyebrow">INDIA HELPLINES</p><h2>Emergency contacts</h2></div><span class="contact-badge">Tap to call</span></div><div class="contact-list">
-            <a class="contact-item" href="tel:112"><span class="contact-symbol red">112</span><span><strong>National emergency number</strong><small>Police, fire and medical emergencies</small></span><b>↗</b></a>
-            <a class="contact-item" href="tel:108"><span class="contact-symbol blue">108</span><span><strong>Ambulance</strong><small>Emergency medical response (availability varies by state)</small></span><b>↗</b></a>
-            <a class="contact-item" href="tel:1070"><span class="contact-symbol green">1070</span><span><strong>State disaster control room</strong><small>Confirm local availability with state authorities</small></span><b>↗</b></a>
-            <a class="contact-item" href="tel:1077"><span class="contact-symbol blue">1077</span><span><strong>District disaster control room</strong><small>District-level disaster response; verify locally</small></span><b>↗</b></a>
-            <a class="contact-item" href="tel:101"><span class="contact-symbol coral">101</span><span><strong>Fire and rescue</strong><small>Fire-related emergencies</small></span><b>↗</b></a>
-            <a class="contact-item" href="tel:1098"><span class="contact-symbol green">1098</span><span><strong>Child Helpline</strong><small>Help and protection for children</small></span><b>↗</b></a>
-          </div><p class="source-note">If you are in immediate danger, call 112 where available and follow local authorities. Some state/district helplines can change; verify the latest numbers before an emergency.</p></article>
-          <article class="panel clinic-panel"><div class="panel-title"><div><p class="eyebrow">MEDICAL FACILITIES</p><h2>Clinic & hospital locator</h2></div><span class="round-icon">⌖</span></div><p class="muted small">Enter an Assam town or use your device location. Results come from OpenStreetMap contributors and may be incomplete.</p><form id="clinicForm" class="search-row"><input id="clinicQuery" type="text" placeholder="e.g. Guwahati, Jorhat, Silchar" aria-label="Town or location" value="Guwahati, Assam"><button class="primary-button" type="submit">Search</button></form><div id="clinicStatus" class="clinic-status" aria-live="polite">Map is ready. Search for a town to find listed facilities.</div><div id="clinicMap" class="clinic-map" aria-label="Embedded clinic locator map"></div><div id="clinicResults" class="clinic-results"></div><p class="source-note">Not an emergency dispatch system. Call ahead when possible; do not rely on map listings alone during a crisis.</p></article>
+        <p class="muted small">
+         Tick items as you pack them. Your progress stays on this page only.
+        </p>
+        <div class="kit-list" id="kitList">
         </div>
-      </section>
-
-      <section class="page" id="page-quiz" aria-labelledby="quiz-title">
-        <div class="quiz-layout">
-          <div class="quiz-intro"><p class="eyebrow">LEARN BY DOING</p><h1 id="quiz-title">Flood safety quiz</h1><p class="muted">Five quick questions. Choose an answer to check what you know.</p><div class="quiz-score-card"><span>YOUR SCORE</span><strong id="quizScore">0 / 5</strong><div class="progress-track"><span id="quizProgress"></span></div><button class="text-button" id="resetQuiz">Restart quiz ↻</button></div></div>
-          <div class="panel quiz-panel"><div class="quiz-topline"><span id="quizQuestionNumber">QUESTION 1 OF 5</span><span class="quiz-tag">Flood safety</span></div><h2 id="quizQuestion">Loading question…</h2><div id="quizAnswers" class="quiz-answers"></div><div id="quizFeedback" class="quiz-feedback" aria-live="polite"></div><div class="quiz-actions"><button id="nextQuestion" class="primary-button" disabled>Next question →</button></div></div>
+        <div class="progress-track">
+         <span id="kitProgress">
+         </span>
         </div>
-      </section>
-    </main>
-    <footer class="app-footer"><span class="footer-brand"><span class="footer-wave">≈</span> TIDE TURN</span><span>Safer Communities, Stronger Tomorrows</span><span>Preparedness • Awareness • Community</span></footer>
+        <p class="small muted" id="kitCount">
+         0 of 8 packed
+        </p>
+        <div class="medical-note">
+         <strong>
+          Medical documents
+         </strong>
+         <p>
+          Keep copies of prescriptions, allergies, blood group and key medical records in a waterproof pouch. Avoid uploading sensitive documents to this demo website.
+         </p>
+        </div>
+       </aside>
+      </div>
+      <article class="panel contacts-panel" id="emergency-contacts">
+       <div class="panel-title">
+        <div>
+         <p class="eyebrow">
+          INDIA HELPLINES
+         </p>
+         <h2>
+          Emergency contacts
+         </h2>
+        </div>
+        <span class="contact-badge">
+         Tap to call
+        </span>
+       </div>
+       <div class="contact-list">
+        <a class="contact-item" href="tel:112">
+         <span class="contact-symbol red">
+          112
+         </span>
+         <span>
+          <strong>
+           National emergency number
+          </strong>
+          <small>
+           Police, fire and medical emergencies
+          </small>
+         </span>
+         <b>
+          &nearrow;
+         </b>
+        </a>
+        <a class="contact-item" href="tel:108">
+         <span class="contact-symbol blue">
+          108
+         </span>
+         <span>
+          <strong>
+           Ambulance
+          </strong>
+          <small>
+           Emergency medical response (availability varies by state)
+          </small>
+         </span>
+         <b>
+          &nearrow;
+         </b>
+        </a>
+        <a class="contact-item" href="tel:1070">
+         <span class="contact-symbol green">
+          1070
+         </span>
+         <span>
+          <strong>
+           State disaster control room
+          </strong>
+          <small>
+           Confirm local availability with state authorities
+          </small>
+         </span>
+         <b>
+          &nearrow;
+         </b>
+        </a>
+        <a class="contact-item" href="tel:1077">
+         <span class="contact-symbol blue">
+          1077
+         </span>
+         <span>
+          <strong>
+           District disaster control room
+          </strong>
+          <small>
+           District-level disaster response; verify locally
+          </small>
+         </span>
+         <b>
+          &nearrow;
+         </b>
+        </a>
+        <a class="contact-item" href="tel:101">
+         <span class="contact-symbol coral">
+          101
+         </span>
+         <span>
+          <strong>
+           Fire and rescue
+          </strong>
+          <small>
+           Fire-related emergencies
+          </small>
+         </span>
+         <b>
+          &nearrow;
+         </b>
+        </a>
+        <a class="contact-item" href="tel:1098">
+         <span class="contact-symbol green">
+          1098
+         </span>
+         <span>
+          <strong>
+           Child Helpline
+          </strong>
+          <small>
+           Help and protection for children
+          </small>
+         </span>
+         <b>
+          &nearrow;
+         </b>
+        </a>
+       </div>
+       <p class="source-note">
+        If you are in immediate danger, call 112 where available and follow local authorities. Some state/district helplines can change; verify the latest numbers before an emergency.
+       </p>
+      </article>
+     </div>
+     <div class="safety-resources safety-updates">
+      <div class="resource-photo">
+       <img alt="Floodwater around a home in Assam" data-fallback="assets/flood-village.svg" loading="lazy" src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&amp;fit=crop&amp;w=900&amp;q=80"/>
+       <div>
+        <span class="eyebrow">
+         WHY PREPARE?
+        </span>
+        <h3>
+         Floods can change familiar routes quickly.
+        </h3>
+        <p>
+         Plan ahead, keep essentials ready and use official warnings rather than trying to judge water depth yourself.
+        </p>
+       </div>
+      </div>
+      <div class="resource-links">
+       <p class="eyebrow">
+        LATEST UPDATES
+       </p>
+       <h3>
+        Check official information
+       </h3>
+       <a href="https://asdma.gov.in/pdf/Assam%20State%20%20Disaster%20Management%20Plan_Volume_1.pdf" rel="noopener" target="_blank">
+        ASDMA reports and updates &nearrow;
+       </a>
+       <a href="https://ndma.gov.in/" rel="noopener" target="_blank">
+        National Disaster Management Authority &nearrow;
+       </a>
+       <button class="feature-action" data-page="safety" data-scroll="flood-map-section">
+        Open flood map
+        <span>
+         &rarr;
+        </span>
+       </button>
+      </div>
+     </div>
+     <div class="source-note">
+      Safety guidance: follow local authorities and official warnings first. This learning website is not an emergency dispatch service.
+     </div>
+    </section>
+    <section aria-labelledby="info-title" class="page" id="page-information">
+     <header class="info-heading">
+      <div>
+       <p class="eyebrow">
+        THE IMPACT IN NUMBERS
+       </p>
+       <h1 id="info-title">
+        Understanding Assam&rsquo;s floods
+       </h1>
+       <p class="muted">
+        Explore reported figures, real photographs and a quick quiz. Use official alerts for today&rsquo;s conditions.
+       </p>
+      </div>
+      <span class="year-pill">
+       ASDMA report &middot; 2020&ndash;2022
+      </span>
+     </header>
+     <div class="info-top-grid">
+      <article class="quiz-card" id="information-quiz">
+       <div class="quiz-card-heading">
+        <p class="eyebrow">
+         TAKE THE QUIZ
+        </p>
+        <span class="quiz-tag">
+         5 questions
+        </span>
+       </div>
+       <h2>
+        What would you do?
+       </h2>
+       <p class="muted">
+        Check your flood-safety knowledge and learn from each answer.
+       </p>
+       <div class="quiz-question-number" id="quizQuestionNumber">
+        QUESTION 1 OF 5
+       </div>
+       <h3 id="quizQuestion">
+        Loading question&hellip;
+       </h3>
+       <div class="quiz-answers" id="quizAnswers">
+       </div>
+       <div aria-live="polite" class="quiz-feedback" id="quizFeedback">
+       </div>
+       <div class="quiz-bottom">
+        <span class="score-pill">
+         Score
+         <strong id="quizScore">
+          0 / 5
+         </strong>
+        </span>
+        <button class="primary-button" disabled="" id="nextQuestion">
+         Next question &rarr;
+        </button>
+       </div>
+       <div class="progress-track">
+        <span id="quizProgress">
+        </span>
+       </div>
+       <button class="text-button" id="resetQuiz">
+        Restart quiz &orarr;
+       </button>
+      </article>
+      <article class="panel donut-panel">
+       <p class="eyebrow">
+        THREE-YEAR COMPARISON
+       </p>
+       <h2>
+        Reported impact
+       </h2>
+       <div class="donut-wrap">
+        <canvas aria-label="Donut chart comparing reported people affected by floods in Assam in 2020, 2021 and 2022, in lakh" id="districtChart" role="img">
+        </canvas>
+        <div class="donut-center">
+         <strong>
+          121.13
+         </strong>
+         <span>
+          lakh over 3 years
+         </span>
+        </div>
+       </div>
+       <p class="chart-caption">
+        Slices show each year&rsquo;s reported total. Some people may be affected in more than one year, so this is not a count of unique people.
+       </p>
+       <a class="source-link" href="https://asdma.gov.in/pdf/Assam%20State%20%20Disaster%20Management%20Plan_Volume_1.pdf" rel="noopener" target="_blank">
+        Source: ASDMA State Disaster Management Plan &nearrow;
+       </a>
+      </article>
+      <article class="panel info-note-panel">
+       <p class="eyebrow">
+        WHY IT MATTERS
+       </p>
+       <h2>
+        Floods affect more than homes.
+       </h2>
+       <p>
+        Rising water can disrupt roads, schools, healthcare, farms and access to clean water. The impact varies by year and location.
+       </p>
+       <div class="note-stat">
+        <strong>
+         57.5 lakh
+        </strong>
+        <span>
+         people reported affected in Assam in 2022
+        </span>
+       </div>
+       <div class="note-stat">
+        <strong>
+         57.89 lakh
+        </strong>
+        <span>
+         people reported affected in Assam in 2020
+        </span>
+       </div>
+       <p class="small muted">
+        Historical figures explain past impacts; they do not predict local conditions today.
+       </p>
+      </article>
+     </div>
+     <div class="info-lower-grid">
+      <article class="panel chart-panel">
+       <div class="chart-head">
+        <div>
+         <p class="eyebrow">
+          YEAR-TO-YEAR COMPARISON
+         </p>
+         <h2>
+          People affected by floods
+         </h2>
+         <p class="muted small">
+          Assam &middot; reported people, in lakh &middot; 2020&ndash;2022
+         </p>
+        </div>
+        <span class="chart-chip">
+         Historical data
+        </span>
+       </div>
+       <div class="chart-wrap">
+        <canvas aria-label="Bar chart showing people affected by floods in Assam from 2020 to 2022, in lakh" id="populationChart" role="img">
+        </canvas>
+       </div>
+       <p class="chart-caption">
+        Each bar shows the reported number of people affected that year. One lakh equals 100,000 people.
+       </p>
+       <p class="source-note">
+        Figures shown: 2020 57.89 lakh; 2021 5.74 lakh; 2022 57.50 lakh. Source: Assam State Disaster Management Plan, Volume 1, Table 5 (citing the Flood Memorandum, Revenue &amp; Disaster Management Department, 2022).
+       </p>
+       <a class="source-link" href="https://asdma.gov.in/pdf/Assam%20State%20%20Disaster%20Management%20Plan_Volume_1.pdf" rel="noopener" target="_blank">
+        Open the official ASDMA report &nearrow;
+       </a>
+      </article>
+      <div class="info-story">
+       <article class="panel story-copy">
+        <p class="eyebrow">
+         READ THE PATTERN
+        </p>
+        <h2>
+         One year can look very different from the next.
+        </h2>
+        <p>
+         The reported total fell from 2020 to 2021 and rose again in 2022. These figures show how much annual impact can vary; they do not predict today&rsquo;s conditions. Always check current district warnings.
+        </p>
+        <a class="source-link" href="https://asdma.gov.in/pdf/Assam%20State%20%20Disaster%20Management%20Plan_Volume_1.pdf" rel="noopener" target="_blank">
+         Check ASDMA updates &nearrow;
+        </a>
+       </article>
+       <div class="photo-grid">
+        <figure class="photo-card">
+         <img alt="Floodwater affecting a community in Assam" data-fallback="assets/flood-community.svg" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Assam_flood_in_2015.jpg"/>
+         <figcaption>
+          <strong>
+           When rivers rise
+          </strong>
+          <span>
+           Floodwater can surround homes and interrupt daily life.
+          </span>
+         </figcaption>
+        </figure>
+        <figure class="photo-card">
+         <img alt="Flood-affected village and surrounding water" data-fallback="assets/flood-village.svg" loading="lazy" src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&amp;fit=crop&amp;w=900&amp;q=80"/>
+         <figcaption>
+          <strong>
+           Impact on communities
+          </strong>
+          <span>
+           Roads, homes and access to services can be affected.
+          </span>
+         </figcaption>
+        </figure>
+       </div>
+      </div>
+     </div>
+    </section>
+   </main>
+   <footer class="app-footer">
+    <span class="footer-brand">
+     <span class="footer-wave">
+      &asymp;
+     </span>
+     TIDE TURN
+    </span>
+    <span>
+     Safer Communities, Stronger Tomorrows
+    </span>
+    <span>
+     Preparedness &bull; Awareness &bull; Community
+    </span>
+   </footer>
   </div>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
-  <script src="script.js"></script>
-</body>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js">
+  </script>
+  <script src="script.js">
+  </script>
+ </body>
 </html>

@@ -1,29 +1,33 @@
-TIDE TURN — Flood Safety Website
+TIDE TURN — WEBSITE FILES
 
-FILES
-- index.html: all page content and structure
-- style.css: colour palette, layout and responsive styling
-- script.js: navigation, safety tabs, emergency kit checklist, chart, maps and quiz
-- assets/hero-flood.jpg: fallback hero image (the homepage also uses a higher-resolution Wikimedia Commons photo online)
+Files
+- index.html: the three pages and content
+- style.css: colours, layout and responsive styling
+- script.js: page navigation, safety tabs, checklist, quiz, charts and maps
+- assets/: bundled illustrated image fallbacks used if remote photographs cannot load
 
-HOW TO RUN
-1. Keep index.html, style.css and script.js in the same folder.
-2. Keep the assets folder beside those three files.
-3. Open index.html in a browser, or upload all files/folders to the same GitHub Pages repository.
-4. The site needs an internet connection for Leaflet/OpenStreetMap, Chart.js, fonts and the external flood photographs.
+Run locally
+Open index.html in a browser. For map and clinic search features, use a local web server or publish through GitHub Pages. These features need an internet connection.
 
-FUNCTIONAL FEATURES
-- Four home feature cards navigate to the map, information, quiz and help pages.
-- Flood map uses Leaflet and OpenStreetMap street tiles, can be zoomed/panned, and has a Zoom to Assam button. The optional NASA satellite layer is imagery only, not live flood detection.
-- Clinic locator uses Nominatim and Overpass OpenStreetMap data; results may be incomplete or unavailable during service throttling.
-- Quiz has five questions, answer feedback, score, progress and restart.
-- Safety tabs switch between before/during/after guidance; emergency-kit checkboxes update progress.
-- Information chart shows historical annual reported figures, not live readings.
+Publish on GitHub Pages
+1. Upload index.html, style.css, script.js and the entire assets folder to the same repository folder.
+2. In repository Settings → Pages, choose the correct branch and folder.
+3. Open the published site over HTTPS.
 
-IMAGE CREDITS
-The two Assam flood photographs are hosted by Wikimedia Commons:
-- “Assam flood in 2015” by Pradip Nemane, CC BY-SA 4.0: https://commons.wikimedia.org/wiki/File:Assam_flood_in_2015.jpg
-- “Flood affected village” by KEmel49, CC BY-SA 4.0: https://commons.wikimedia.org/wiki/File:Flood_affected_village.jpg
+Features
+- Three-page navigation: Home, Information and Safety
+- Home hero image, feature cards, photo cards, paper-boat logo and wave decoration
+- Information page quiz, sourced historical figures, doughnut chart and bar chart
+- Safety page with interactive OpenStreetMap maps, an optional NASA satellite imagery layer, clinic/hospital search, emergency contacts, before/during/after steps and a tickable emergency kit
 
-IMPORTANT
-This is an educational school project, not an emergency dispatch system. Use official government alerts and follow local authorities during an actual emergency. Emergency numbers and clinic listings should be verified before use.
+Important limitations
+- The street map is interactive; the satellite layer is imagery for context, not a verified live flood detector.
+- Check ASDMA and district administration for current flood warnings.
+- Clinic search depends on public OpenStreetMap/Nominatim/Overpass services. Data may be incomplete or temporarily unavailable; this is not an emergency dispatch service.
+- Historical chart values are labelled as reported figures, not current conditions. Follow the source link in the Information page to consult ASDMA reports.
+- Real photographs are loaded from Wikimedia Commons and Unsplash. If an image host is unavailable, a bundled illustration is shown instead.
+
+Colours: #0E4C92 and #89CFEF. Fonts: Varela Round and Nunito Sans.
+
+Historical chart data
+The Information page charts the 2020–2022 population-affected figures reported in Table 5 of the Assam State Disaster Management Plan, Volume 1: 57.89 lakh (2020), 5.74 lakh (2021) and 57.5 lakh (2022). The doughnut chart compares those annual totals and explicitly notes that people may be counted in more than one year.
