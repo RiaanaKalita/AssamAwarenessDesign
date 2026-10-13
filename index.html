@@ -1,758 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
- <head>
-  <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1" name="viewport"/>
-  <meta content="#0E4C92" name="theme-color"/>
-  <title>
-   Tide Turn | Safer Communities, Stronger Tomorrows
-  </title>
-  <link href="https://fonts.googleapis.com" rel="preconnect"/>
-  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&amp;family=Nunito+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
-  <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
-  <link href="style.css" rel="stylesheet"/>
- </head>
- <body>
-  <div class="app-shell">
-   <header class="topbar">
-    <button aria-label="Tide Turn home" class="brand" data-page="home">
-     <span aria-hidden="true" class="brand-mark">
-      <svg role="img" viewbox="0 0 44 32">
-       <path d="M4 18 13 5 22 18Z" fill="#fff">
-       </path>
-       <path d="M23 18 31 8 40 18Z" fill="#89CFEF">
-       </path>
-       <path d="M4 20 22 26 40 20 34 27 10 27Z" fill="#fff">
-       </path>
-       <path d="M3 30c6-3 11-3 17 0s11 3 21 0" fill="none" stroke="#89CFEF" stroke-linecap="round" stroke-width="2.5">
-       </path>
-      </svg>
-     </span>
-     <span>
-      TIDE TURN
-     </span>
-    </button>
-    <nav aria-label="Main navigation" class="main-nav">
-     <button class="nav-link active" data-page="home">
-      Home
-     </button>
-     <button class="nav-link" data-page="information">
-      Information
-     </button>
-     <button class="nav-link" data-page="safety">
-      Safety
-     </button>
-    </nav>
-   </header>
-   <main class="view-stack">
-    <section aria-labelledby="home-title" class="page active" id="page-home">
-     <div aria-label="Flood awareness in Assam" class="hero">
-      <img alt="Flooding in Assam, showing the effect of rising water on a community" class="hero-photo" data-fallback="assets/flood-community.svg" loading="eager" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Assam_flood_in_2015.jpg"/>
-      <div class="hero-shade">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tide Turn – Flood Safety for Assam</title>
+<link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Akaya+Kanadaka&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<style>
+/* 1. COLOURS (from my design specification) */
+:root{--foam:#E4F4F4;--teal:#50727A;--sage:#BAC9AE;--peach:#E9988E;--coral:#FA6C5D;--blue:#0E4C92;--sky:#89CFEF;--ink:#12303a}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+[id]{scroll-margin-top:70px}
+[hidden]{display:none!important}
+body{margin:0;font:16px/1.6 'Varela Round',Arial,sans-serif;background:var(--foam);color:var(--ink)}
+body.big{font-size:20px}
+:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+h1,h2,h3{line-height:1.25;margin:.3em 0}
+h2{font-size:26px;color:var(--blue)}
+h3{font-size:20px}
+/* 2. NAVIGATION */
+nav{position:sticky;top:0;z-index:9;background:var(--blue);display:flex;flex-wrap:wrap;align-items:center;padding:0 16px}
+.logo{display:flex;gap:8px;align-items:center;color:#fff;font:22px 'Akaya Kanadaka',serif;margin-right:auto}
+.tab{background:none;border:0;border-bottom:4px solid transparent;color:#fff;font-size:18px;font-family:inherit;min-height:48px;min-width:44px;padding:0 18px;cursor:pointer}
+.tab:hover{background:rgba(255,255,255,.15)}
+.tab.on{border-bottom-color:var(--sky)}
+.page{display:none}.page.on{display:block}
+/* 3. BUTTONS (at least 44x44px) */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:8px 20px;border:0;border-radius:12px;background:var(--coral);color:var(--ink);font:inherit;font-weight:bold;cursor:pointer;text-decoration:none;transition:transform .2s}
+.btn:hover{transform:scale(1.05)}
+.btn.light{background:#fff}
+/* 4. LAYOUT + CARDS */
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.card{border-radius:16px;padding:20px;background:#fff}
+.teal{background:var(--teal);color:#fff}.sage{background:var(--sage)}.peach{background:var(--peach)}.blue{background:var(--blue);color:#fff}
+.tile{text-align:center;transition:transform .2s}.tile:hover{transform:translateY(-6px)}
+.icon{font-size:40px}
+.hero{position:relative;min-height:340px;display:flex;align-items:center;color:#fff;overflow:hidden}
+.hero svg{position:absolute;inset:0;width:100%;height:100%}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,45,75,.88),rgba(10,45,75,.3))}
+.hero .txt{position:relative;z-index:1;padding:28px 24px;max-width:700px}
+.hero h1{font:clamp(32px,6vw,52px)/1.1 'Akaya Kanadaka',serif;margin:0 0 12px}
+.chip{display:inline-block;background:var(--sage);color:var(--ink);border-radius:20px;padding:4px 14px;margin:0 0 14px}
+.waves{height:40px;animation:drift 8s linear infinite;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40'%3E%3Cpath d='M0 18Q20 0 40 18T80 18' fill='none' stroke='%2350727A' stroke-width='3'/%3E%3Cpath d='M0 32Q20 14 40 32T80 32' fill='none' stroke='%2389CFEF' stroke-width='3'/%3E%3C/svg%3E") repeat-x}
+@keyframes drift{to{background-position-x:80px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.stat b{display:block;font-size:30px;color:var(--blue)}
+/* 5. EMERGENCY NUMBERS + HOSPITALS */
+.num{display:flex;align-items:center;gap:14px;background:#fff;border-left:10px solid var(--coral);border-radius:12px;padding:12px 16px;color:var(--ink);text-decoration:none}
+.num strong{font-size:26px;color:var(--blue);min-width:70px}
+select{min-height:44px;font:inherit;padding:0 10px;border-radius:10px;border:2px solid var(--teal)}
+.hosp{background:#fff;color:var(--ink);border-radius:12px;padding:12px;margin:10px 0}
+iframe{width:100%;height:300px;border:0;border-radius:12px}
+/* 6. SAFETY STEPS + CHECKLIST */
+details{background:#fff;border-radius:12px;margin-bottom:10px;padding:0 16px 8px}
+summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-size:20px;color:var(--blue)}
+.kit label{display:flex;gap:12px;align-items:center;min-height:44px;cursor:pointer}
+.kit input{width:24px;height:24px;accent-color:var(--blue)}
+.track{background:#fff;border:1px solid var(--teal);border-radius:8px;height:24px;overflow:hidden}
+.fill{height:100%;width:0;background:var(--blue);color:#fff;font-size:14px;line-height:24px;padding-left:8px;white-space:nowrap;transition:width 1s}
+#map{height:380px;border-radius:12px}
+/* 7. QUIZ + CHARTS */
+.opt{display:block;width:100%;text-align:left;margin:8px 0;min-height:44px;padding:10px 14px;border-radius:10px;border:2px solid transparent;background:#fff;color:var(--ink);font:inherit;cursor:pointer}
+.opt.right{background:#c9efc9;border-color:#2e7d32}.opt.wrong{background:#ffd0cb;border-color:#c62828}
+.donut{width:150px;height:150px;border-radius:50%;margin:10px auto;display:grid;place-items:center;background:conic-gradient(var(--coral) 0 64.7%,var(--blue) 64.7% 100%)}
+.donut span{width:92px;height:92px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:22px}
+.pic svg{width:100%;display:block;border-radius:12px}
+.cap{font-size:14px;margin:4px 0 0}
+.sos{position:fixed;right:16px;bottom:16px;z-index:10;min-height:56px;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+footer{background:var(--teal);color:#fff;padding:20px 16px;font-size:14px}
+</style>
+</head>
+<body>
+
+<!-- Flood scene drawn once, reused with <use> (so no photos needed) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="fs" viewBox="0 0 1200 400"><rect width="1200" height="400" fill="#8fb1bd"/><ellipse cx="220" cy="80" rx="170" ry="38" fill="#d5e3e8"/><ellipse cx="800" cy="70" rx="200" ry="32" fill="#c3d6dc"/><path d="M0 250Q220 150 450 235T900 215T1200 230V400H0Z" fill="#5f8a6e"/><g fill="#e9c58f"><rect x="180" y="235" width="110" height="80"/><rect x="520" y="250" width="120" height="70"/><rect x="900" y="240" width="100" height="80"/></g><path fill="#a5523a" d="M165 237l70-47 70 47zM505 252l75-47 75 47zM885 242l65-47 65 47z"/><rect y="295" width="1200" height="105" fill="#a98f62" opacity=".93"/><path d="M0 305q30-16 60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0t60 0" stroke="#d9c9a3" stroke-width="4" fill="none"/></symbol></svg>
+
+<nav>
+  <div class="logo"><svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true"><path d="M4 24H36L30 34H10Z" fill="#E4F4F4"/><path d="M20 6V22H8Z" fill="#89CFEF"/><path d="M22 10L32 22H22Z" fill="#fff"/></svg>TIDE TURN</div>
+  <button class="tab on" data-p="home" onclick="showPage('home')">Home</button>
+  <button class="tab" data-p="info" onclick="showPage('info')">Information</button>
+  <button class="tab" data-p="safety" onclick="showPage('safety')">Safety</button>
+  <button class="tab" id="big" aria-label="Make text bigger">A+</button>
+</nav>
+
+<!-- ================= HOME ================= -->
+<main id="p-home" class="page on">
+  <section class="hero">
+    <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of flooded houses in Assam"><use href="#fs"/></svg>
+    <div class="txt">
+      <p class="chip">Be aware. Be prepared. Be safe.</p>
+      <h1>Safer Communities<br>Stronger Tomorrow</h1>
+      <button class="btn" onclick="$('donate').scrollIntoView()">DONATE</button>
+      <button class="btn light" onclick="showPage('safety','numbers')">Get help now</button>
+    </div>
+  </section>
+  <div class="waves"></div>
+  <div class="wrap">
+    <h2>What would you like to do?</h2>
+    <div class="grid">
+      <div class="card teal tile"><div class="icon">🌍</div><h3>Flood tracker</h3><p>See where floods have hit.</p><button class="btn" onclick="showPage('safety','flood-map')">Open map</button></div>
+      <div class="card teal tile"><div class="icon">📖</div><h3>Info</h3><p>Facts about Assam floods.</p><button class="btn" onclick="showPage('info')">Read facts</button></div>
+      <div class="card teal tile"><div class="icon">📝</div><h3>Quizzes</h3><p>Test your flood knowledge.</p><button class="btn" onclick="showPage('info','quiz')">Take quiz</button></div>
+      <div class="card teal tile"><div class="icon">🩺</div><h3>Get help</h3><p>Emergency numbers and hospitals.</p><button class="btn" onclick="showPage('safety','numbers')">Get help</button></div>
+      <div class="card sage">
+        <h3>About us</h3>
+        <details><summary>Read more</summary><p>Hi! I'm a Grade 7 student from Assam. I built Tide Turn for families in flood-prone areas and for students who want to learn how to stay safe.</p></details>
       </div>
-      <div class="hero-copy">
-       <p class="eyebrow">
-        FLOOD AWARENESS &bull; ASSAM &amp; BEYOND
-       </p>
-       <h1 id="home-title">
-        Safer Communities,
-        <br/>
-        Stronger Tomorrows
-       </h1>
-       <button class="coral-button" data-page="safety">
-        Explore safety
-        <span>
-         &nearrow;
-        </span>
-       </button>
-      </div>
-      <div class="hero-note">
-       Be aware.
-       <br/>
-       Be prepared. Be safe.
-      </div>
-     </div>
-     <div class="home-content">
-      <div class="home-heading">
-       <div>
-        <p class="eyebrow">
-         WELCOME TO TIDE TURN
-        </p>
-        <h2>
-         What would you like to do?
-        </h2>
-       </div>
-       <p class="muted home-intro">
-        Clear information for safer choices &mdash; before, during and after a flood.
-       </p>
-      </div>
-      <div class="feature-grid">
-       <article class="feature-card feature-blue">
-        <div class="feature-icon">
-         🌏
-        </div>
-        <h3>
-         Flood tracker
-        </h3>
-        <p>
-         Explore a world map and Assam-focused satellite view.
-        </p>
-        <button class="feature-action" data-page="safety" data-scroll="flood-map-section">
-         Open map
-         <span>
-          &rarr;
-         </span>
-        </button>
-       </article>
-       <article class="feature-card feature-green">
-        <div class="feature-icon">
-         ▤
-        </div>
-        <h3>
-         Info &amp; data
-        </h3>
-        <p>
-         Understand the real impact of floods through sourced figures.
-        </p>
-        <button class="feature-action" data-page="information">
-         View information
-         <span>
-          &rarr;
-         </span>
-        </button>
-       </article>
-       <article class="feature-card feature-coral">
-        <div class="feature-icon">
-         &checkmark;
-        </div>
-        <h3>
-         Quizzes
-        </h3>
-        <p>
-         Test your knowledge and practise safer decisions.
-        </p>
-        <button class="feature-action" data-page="information" data-scroll="information-quiz">
-         Take the quiz
-         <span>
-          &rarr;
-         </span>
-        </button>
-       </article>
-       <article class="feature-card feature-lilac">
-        <div class="feature-icon">
-         ✚
-        </div>
-        <h3>
-         Get help
-        </h3>
-        <p>
-         Find emergency contacts and nearby medical facilities.
-        </p>
-        <button class="feature-action" data-page="safety" data-scroll="clinic-locator">
-         Find help
-         <span>
-          &rarr;
-         </span>
-        </button>
-       </article>
-      </div>
-      <div aria-label="Flood photographs" class="home-photo-row">
-       <figure class="home-photo-card">
-        <img alt="Floodwater in Assam" data-fallback="assets/flood-community.svg" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Assam_flood_in_2015.jpg"/>
-        <figcaption>
-         <strong>
-          Floodwater in Assam
-         </strong>
-         <span>
-          Rising water can disrupt homes and daily life.
-         </span>
-        </figcaption>
-       </figure>
-       <figure class="home-photo-card">
-        <img alt="Communities at risk" data-fallback="assets/flood-village.svg" loading="lazy" src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&amp;fit=crop&amp;w=900&amp;q=80"/>
-        <figcaption>
-         <strong>
-          Communities at risk
-         </strong>
-         <span>
-          Preparedness helps families make safer choices.
-         </span>
-        </figcaption>
-       </figure>
-       <figure class="home-photo-card">
-        <img alt="Understand the warning signs" data-fallback="assets/flood-community.svg" loading="lazy" src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&amp;fit=crop&amp;w=900&amp;q=80"/>
-        <figcaption>
-         <strong>
-          Understand the warning signs
-         </strong>
-         <span>
-          Use official alerts and avoid entering floodwater.
-         </span>
-        </figcaption>
-       </figure>
-      </div>
-      <aside class="about-card">
-       <div aria-hidden="true" class="about-avatar">
-        <svg viewbox="0 0 80 80">
-         <circle cx="40" cy="25" fill="#fff" r="14">
-         </circle>
-         <path d="M14 72c2-19 12-29 26-29s24 10 26 29" fill="#fff">
-         </path>
-         <path d="M24 13c5-7 12-10 20-7" fill="none" stroke="#d6edf7" stroke-linecap="round" stroke-width="4">
-         </path>
-        </svg>
-       </div>
-       <p class="eyebrow">
-        ABOUT US
-       </p>
-       <h3>
-        Prepared together.
-       </h3>
-       <p>
-        Tide Turn helps students and families understand flood risks and make safer, informed choices.
-       </p>
-       <button class="about-link" data-page="information">
-        Why it matters
-        <span>
-         &rarr;
-        </span>
-       </button>
-      </aside>
-      <div class="home-bottom">
-       <span>
-        Preparedness starts with information.
-       </span>
-       <span aria-hidden="true" class="wave-art">
-        <svg preserveaspectratio="none" viewbox="0 0 500 45">
-         <path d="M0 17 Q12 2 25 17 T50 17 T75 17 T100 17 T125 17 T150 17 T175 17 T200 17 T225 17 T250 17 T275 17 T300 17 T325 17 T350 17 T375 17 T400 17 T425 17 T450 17 T475 17 T500 17">
-         </path>
-         <path d="M0 29 Q12 14 25 29 T50 29 T75 29 T100 29 T125 29 T150 29 T175 29 T200 29 T225 29 T250 29 T275 29 T300 29 T325 29 T350 29 T375 29 T400 29 T425 29 T450 29 T475 29 T500 29">
-         </path>
-        </svg>
-       </span>
-      </div>
-     </div>
-    </section>
-    <section aria-labelledby="safety-title" class="page" id="page-safety">
-     <div class="section-banner safety-banner">
-      <div>
-       <p class="eyebrow">
-        PRACTICAL GUIDANCE
-       </p>
-       <h1 id="safety-title">
-        Need help? You're not alone.
-       </h1>
-       <p>
-        Choose a stage to see clear, practical steps.
-       </p>
-      </div>
-      <div aria-hidden="true" class="banner-illustration">
-       ⌂　♡　✚
-      </div>
-     </div>
-     <div class="locator-heading">
-      <h2>
-       Find flood information and medical help
-      </h2>
-      <p>
-       Explore the map and search nearby health facilities. Listings and imagery may be incomplete, so follow official local instructions.
-      </p>
-     </div>
-     <div aria-label="Flood map and clinic locator" class="locator-grid">
-      <div class="panel map-panel" id="flood-map-section">
-       <div class="map-panel-head">
-        <div>
-         <h2>
-          Flood map
-         </h2>
-         <p class="muted small">
-          Interactive map &middot; OpenStreetMap
-         </p>
-        </div>
-        <div class="map-controls">
-         <button class="small-button active" id="baseMapBtn">
-          Street map
-         </button>
-         <button class="small-button" id="satelliteBtn">
-          Satellite layer
-         </button>
-        </div>
-       </div>
-       <div aria-label="Interactive world map" class="map-box" id="floodMap">
-       </div>
-       <div class="map-footer">
-        <span>
-         <b class="legend-dot blue-dot">
-         </b>
-         Map location
-        </span>
-        <span>
-         Use + / &minus; to zoom
-        </span>
-        <button class="text-button" id="assamView">
-         Zoom to Assam &rarr;
-        </button>
-       </div>
-      </div>
-      <article class="panel clinic-panel" id="clinic-locator">
-       <div class="panel-title">
-        <div>
-         <p class="eyebrow">
-          MEDICAL FACILITIES
-         </p>
-         <h2>
-          Clinic &amp; hospital locator
-         </h2>
-        </div>
-        <span class="round-icon">
-         &target;
-        </span>
-       </div>
-       <p class="muted small">
-        Enter an Assam town or use your device location. Results come from OpenStreetMap contributors and may be incomplete.
-       </p>
-       <form class="search-row" id="clinicForm">
-        <input aria-label="Town or location" id="clinicQuery" placeholder="e.g. Guwahati, Jorhat, Silchar" type="text" value="Guwahati, Assam"/>
-        <button class="primary-button" type="submit">
-         Search
-        </button>
-       </form>
-       <div aria-live="polite" class="clinic-status" id="clinicStatus">
-        Map is ready. Search for a town to find listed facilities.
-       </div>
-       <div aria-label="Embedded clinic locator map" class="clinic-map" id="clinicMap">
-       </div>
-       <div class="clinic-results" id="clinicResults">
-       </div>
-       <p class="source-note">
-        Not an emergency dispatch system. Call ahead when possible; do not rely on map listings alone during a crisis.
-       </p>
-      </article>
-     </div>
-     <div class="safety-lower-grid">
-      <div class="safety-layout safety-guidance-grid">
-       <div class="safety-main panel">
-        <div aria-label="Flood stage" class="tab-row" role="tablist">
-         <button aria-selected="true" class="stage-tab selected" data-stage="before" role="tab">
-          Before a flood
-         </button>
-         <button aria-selected="false" class="stage-tab" data-stage="during" role="tab">
-          During a flood
-         </button>
-         <button aria-selected="false" class="stage-tab" data-stage="after" role="tab">
-          After a flood
-         </button>
-        </div>
-        <div class="step-list" id="stageContent">
-        </div>
-       </div>
-       <aside class="kit-panel panel">
-        <div class="panel-title">
-         <div>
-          <p class="eyebrow">
-           GET READY
-          </p>
-          <h2>
-           Emergency kit
-          </h2>
-         </div>
-         <span class="kit-bag">
-          ＋
-         </span>
-        </div>
-        <p class="muted small">
-         Tick items as you pack them. Your progress stays on this page only.
-        </p>
-        <div class="kit-list" id="kitList">
-        </div>
-        <div class="progress-track">
-         <span id="kitProgress">
-         </span>
-        </div>
-        <p class="small muted" id="kitCount">
-         0 of 8 packed
-        </p>
-        <div class="medical-note">
-         <strong>
-          Medical documents
-         </strong>
-         <p>
-          Keep copies of prescriptions, allergies, blood group and key medical records in a waterproof pouch. Avoid uploading sensitive documents to this demo website.
-         </p>
-        </div>
-       </aside>
-      </div>
-      <article class="panel contacts-panel" id="emergency-contacts">
-       <div class="panel-title">
-        <div>
-         <p class="eyebrow">
-          INDIA HELPLINES
-         </p>
-         <h2>
-          Emergency contacts
-         </h2>
-        </div>
-        <span class="contact-badge">
-         Tap to call
-        </span>
-       </div>
-       <div class="contact-list">
-        <a class="contact-item" href="tel:112">
-         <span class="contact-symbol red">
-          112
-         </span>
-         <span>
-          <strong>
-           National emergency number
-          </strong>
-          <small>
-           Police, fire and medical emergencies
-          </small>
-         </span>
-         <b>
-          &nearrow;
-         </b>
-        </a>
-        <a class="contact-item" href="tel:108">
-         <span class="contact-symbol blue">
-          108
-         </span>
-         <span>
-          <strong>
-           Ambulance
-          </strong>
-          <small>
-           Emergency medical response (availability varies by state)
-          </small>
-         </span>
-         <b>
-          &nearrow;
-         </b>
-        </a>
-        <a class="contact-item" href="tel:1070">
-         <span class="contact-symbol green">
-          1070
-         </span>
-         <span>
-          <strong>
-           State disaster control room
-          </strong>
-          <small>
-           Confirm local availability with state authorities
-          </small>
-         </span>
-         <b>
-          &nearrow;
-         </b>
-        </a>
-        <a class="contact-item" href="tel:1077">
-         <span class="contact-symbol blue">
-          1077
-         </span>
-         <span>
-          <strong>
-           District disaster control room
-          </strong>
-          <small>
-           District-level disaster response; verify locally
-          </small>
-         </span>
-         <b>
-          &nearrow;
-         </b>
-        </a>
-        <a class="contact-item" href="tel:101">
-         <span class="contact-symbol coral">
-          101
-         </span>
-         <span>
-          <strong>
-           Fire and rescue
-          </strong>
-          <small>
-           Fire-related emergencies
-          </small>
-         </span>
-         <b>
-          &nearrow;
-         </b>
-        </a>
-        <a class="contact-item" href="tel:1098">
-         <span class="contact-symbol green">
-          1098
-         </span>
-         <span>
-          <strong>
-           Child Helpline
-          </strong>
-          <small>
-           Help and protection for children
-          </small>
-         </span>
-         <b>
-          &nearrow;
-         </b>
-        </a>
-       </div>
-       <p class="source-note">
-        If you are in immediate danger, call 112 where available and follow local authorities. Some state/district helplines can change; verify the latest numbers before an emergency.
-       </p>
-      </article>
-     </div>
-     <div class="safety-resources safety-updates">
-      <div class="resource-photo">
-       <img alt="Floodwater around a home in Assam" data-fallback="assets/flood-village.svg" loading="lazy" src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&amp;fit=crop&amp;w=900&amp;q=80"/>
-       <div>
-        <span class="eyebrow">
-         WHY PREPARE?
-        </span>
-        <h3>
-         Floods can change familiar routes quickly.
-        </h3>
-        <p>
-         Plan ahead, keep essentials ready and use official warnings rather than trying to judge water depth yourself.
-        </p>
-       </div>
-      </div>
-      <div class="resource-links">
-       <p class="eyebrow">
-        LATEST UPDATES
-       </p>
-       <h3>
-        Check official information
-       </h3>
-       <a href="https://asdma.gov.in/pdf/Assam%20State%20%20Disaster%20Management%20Plan_Volume_1.pdf" rel="noopener" target="_blank">
-        ASDMA reports and updates &nearrow;
-       </a>
-       <a href="https://ndma.gov.in/" rel="noopener" target="_blank">
-        National Disaster Management Authority &nearrow;
-       </a>
-       <button class="feature-action" data-page="safety" data-scroll="flood-map-section">
-        Open flood map
-        <span>
-         &rarr;
-        </span>
-       </button>
-      </div>
-     </div>
-     <div class="source-note">
-      Safety guidance: follow local authorities and official warnings first. This learning website is not an emergency dispatch service.
-     </div>
-    </section>
-    <section aria-labelledby="info-title" class="page" id="page-information">
-     <header class="info-heading">
-      <div>
-       <p class="eyebrow">
-        THE IMPACT IN NUMBERS
-       </p>
-       <h1 id="info-title">
-        Understanding Assam&rsquo;s floods
-       </h1>
-       <p class="muted">
-        Explore reported figures, real photographs and a quick quiz. Use official alerts for today&rsquo;s conditions.
-       </p>
-      </div>
-      <span class="year-pill">
-       ASDMA report &middot; 2020&ndash;2022
-      </span>
-     </header>
-     <div class="info-top-grid">
-      <article class="quiz-card" id="information-quiz">
-       <div class="quiz-card-heading">
-        <p class="eyebrow">
-         TAKE THE QUIZ
-        </p>
-        <span class="quiz-tag">
-         5 questions
-        </span>
-       </div>
-       <h2>
-        What would you do?
-       </h2>
-       <p class="muted">
-        Check your flood-safety knowledge and learn from each answer.
-       </p>
-       <div class="quiz-question-number" id="quizQuestionNumber">
-        QUESTION 1 OF 5
-       </div>
-       <h3 id="quizQuestion">
-        Loading question&hellip;
-       </h3>
-       <div class="quiz-answers" id="quizAnswers">
-       </div>
-       <div aria-live="polite" class="quiz-feedback" id="quizFeedback">
-       </div>
-       <div class="quiz-bottom">
-        <span class="score-pill">
-         Score
-         <strong id="quizScore">
-          0 / 5
-         </strong>
-        </span>
-        <button class="primary-button" disabled="" id="nextQuestion">
-         Next question &rarr;
-        </button>
-       </div>
-       <div class="progress-track">
-        <span id="quizProgress">
-        </span>
-       </div>
-       <button class="text-button" id="resetQuiz">
-        Restart quiz &orarr;
-       </button>
-      </article>
-      <article class="panel donut-panel">
-       <p class="eyebrow">
-        THREE-YEAR COMPARISON
-       </p>
-       <h2>
-        Reported impact
-       </h2>
-       <div class="donut-wrap">
-        <canvas aria-label="Donut chart comparing reported people affected by floods in Assam in 2020, 2021 and 2022, in lakh" id="districtChart" role="img">
-        </canvas>
-        <div class="donut-center">
-         <strong>
-          121.13
-         </strong>
-         <span>
-          lakh over 3 years
-         </span>
-        </div>
-       </div>
-       <p class="chart-caption">
-        Slices show each year&rsquo;s reported total. Some people may be affected in more than one year, so this is not a count of unique people.
-       </p>
-       <a class="source-link" href="https://asdma.gov.in/pdf/Assam%20State%20%20Disaster%20Management%20Plan_Volume_1.pdf" rel="noopener" target="_blank">
-        Source: ASDMA State Disaster Management Plan &nearrow;
-       </a>
-      </article>
-      <article class="panel info-note-panel">
-       <p class="eyebrow">
-        WHY IT MATTERS
-       </p>
-       <h2>
-        Floods affect more than homes.
-       </h2>
-       <p>
-        Rising water can disrupt roads, schools, healthcare, farms and access to clean water. The impact varies by year and location.
-       </p>
-       <div class="note-stat">
-        <strong>
-         57.5 lakh
-        </strong>
-        <span>
-         people reported affected in Assam in 2022
-        </span>
-       </div>
-       <div class="note-stat">
-        <strong>
-         57.89 lakh
-        </strong>
-        <span>
-         people reported affected in Assam in 2020
-        </span>
-       </div>
-       <p class="small muted">
-        Historical figures explain past impacts; they do not predict local conditions today.
-       </p>
-      </article>
-     </div>
-     <div class="info-lower-grid">
-      <article class="panel chart-panel">
-       <div class="chart-head">
-        <div>
-         <p class="eyebrow">
-          YEAR-TO-YEAR COMPARISON
-         </p>
-         <h2>
-          People affected by floods
-         </h2>
-         <p class="muted small">
-          Assam &middot; reported people, in lakh &middot; 2020&ndash;2022
-         </p>
-        </div>
-        <span class="chart-chip">
-         Historical data
-        </span>
-       </div>
-       <div class="chart-wrap">
-        <canvas aria-label="Bar chart showing people affected by floods in Assam from 2020 to 2022, in lakh" id="populationChart" role="img">
-        </canvas>
-       </div>
-       <p class="chart-caption">
-        Each bar shows the reported number of people affected that year. One lakh equals 100,000 people.
-       </p>
-       <p class="source-note">
-        Figures shown: 2020 57.89 lakh; 2021 5.74 lakh; 2022 57.50 lakh. Source: Assam State Disaster Management Plan, Volume 1, Table 5 (citing the Flood Memorandum, Revenue &amp; Disaster Management Department, 2022).
-       </p>
-       <a class="source-link" href="https://asdma.gov.in/pdf/Assam%20State%20%20Disaster%20Management%20Plan_Volume_1.pdf" rel="noopener" target="_blank">
-        Open the official ASDMA report &nearrow;
-       </a>
-      </article>
-      <div class="info-story">
-       <article class="panel story-copy">
-        <p class="eyebrow">
-         READ THE PATTERN
-        </p>
-        <h2>
-         One year can look very different from the next.
-        </h2>
-        <p>
-         The reported total fell from 2020 to 2021 and rose again in 2022. These figures show how much annual impact can vary; they do not predict today&rsquo;s conditions. Always check current district warnings.
-        </p>
-        <a class="source-link" href="https://asdma.gov.in/pdf/Assam%20State%20%20Disaster%20Management%20Plan_Volume_1.pdf" rel="noopener" target="_blank">
-         Check ASDMA updates &nearrow;
-        </a>
-       </article>
-       <div class="photo-grid">
-        <figure class="photo-card">
-         <img alt="Floodwater affecting a community in Assam" data-fallback="assets/flood-community.svg" loading="lazy" src="https://upload.wikimedia.org/wikipedia/commons/0/04/Assam_flood_in_2015.jpg"/>
-         <figcaption>
-          <strong>
-           When rivers rise
-          </strong>
-          <span>
-           Floodwater can surround homes and interrupt daily life.
-          </span>
-         </figcaption>
-        </figure>
-        <figure class="photo-card">
-         <img alt="Flood-affected village and surrounding water" data-fallback="assets/flood-village.svg" loading="lazy" src="https://images.unsplash.com/photo-1547683905-f686c993aae5?auto=format&amp;fit=crop&amp;w=900&amp;q=80"/>
-         <figcaption>
-          <strong>
-           Impact on communities
-          </strong>
-          <span>
-           Roads, homes and access to services can be affected.
-          </span>
-         </figcaption>
-        </figure>
-       </div>
-      </div>
-     </div>
-    </section>
-   </main>
-   <footer class="app-footer">
-    <span class="footer-brand">
-     <span class="footer-wave">
-      &asymp;
-     </span>
-     TIDE TURN
-    </span>
-    <span>
-     Safer Communities, Stronger Tomorrows
-    </span>
-    <span>
-     Preparedness &bull; Awareness &bull; Community
-    </span>
-   </footer>
+    </div>
+    <h2>Why Tide Turn?</h2>
+    <div class="grid">
+      <div class="card stat"><b>39.5 lakh</b>people affected by Assam floods every year on average, 2012–2020 (ASDMA)</div>
+      <div class="card stat"><b>6 in 10</b>people in low- and middle-income countries know their emergency numbers (ScienceDirect)</div>
+      <div class="card stat"><b>67%</b>of people in flood-hit states like Kerala don't know basic flood safety (Indian Express)</div>
+    </div>
+    <div class="card peach" id="donate" style="margin-top:20px"><h3>Want to help?</h3><p>Tide Turn does not collect money. To support flood relief, give only through official government relief funds or registered NGOs, and check their official websites first.</p></div>
   </div>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js">
-  </script>
-  <script src="script.js">
-  </script>
- </body>
+</main>
+
+<!-- ================= INFORMATION ================= -->
+<main id="p-info" class="page">
+  <div class="wrap">
+    <h2>Information: Floods in Assam</h2>
+    <div class="grid">
+      <div class="card blue" id="quiz"></div>
+      <div class="card sage">
+        <h3>What our Grade 7 survey showed</h3>
+        <div class="donut" role="img" aria-label="64.7 percent did not get a perfect score"><span>64.7%</span></div>
+        <p>of Grade 7 students did <b>not</b> get a perfect score on flood questions. Only 35% spotted flood "don'ts" and only 23.4% knew the economic impact.</p>
+      </div>
+    </div>
+
+    <h2>Assam floods at a glance</h2>
+    <div class="grid">
+      <div class="card stat"><b>39.5 lakh</b>people affected each year (average, 2012–2020)</div>
+      <div class="card stat"><b>4,58,041</b>people in relief camps each year (average)</div>
+      <div class="card stat"><b>₹1,186 crore</b>average economic loss each year</div>
+      <div class="card stat"><b>~115</b>lives lost in the recent flood alone</div>
+    </div>
+    <p><i>Source: Assam State Disaster Management Authority (ASDMA).</i></p>
+
+    <h2>Why does Assam flood?</h2>
+    <p>Assam lies in the Brahmaputra valley. In the monsoon, heavy rain makes the Brahmaputra and its tributaries rise and spill over their banks. Riverbank erosion, silt and a warming climate make the floods worse, and many families live right beside the river.</p>
+
+    <h2>How floods change lives</h2>
+    <div class="grid">
+      <div class="pic"><svg viewBox="0 0 400 260" role="img" aria-label="Illustration of a car stuck in flood water"><rect width="400" height="260" fill="#cfe3ea"/><path d="M0 120Q100 70 200 105T400 95V160H0Z" fill="#6f9a78"/><rect x="110" y="118" width="130" height="40" rx="14" fill="#2a6fb0"/><rect x="135" y="98" width="80" height="30" rx="10" fill="#2a6fb0"/><rect x="145" y="104" width="25" height="18" fill="#cfe9f7"/><rect x="178" y="104" width="25" height="18" fill="#cfe9f7"/><rect y="145" width="400" height="115" fill="#a98f62" opacity=".95"/></svg><p class="cap">Flooded streets trap vehicles and cut off roads.</p></div>
+      <div class="pic"><svg viewBox="0 0 400 260" role="img" aria-label="Illustration of a rescue boat"><rect width="400" height="260" fill="#cfe3ea"/><path d="M0 110Q100 60 200 100T400 90V150H0Z" fill="#6f9a78"/><rect y="150" width="400" height="110" fill="#a98f62"/><g fill="#5b3a29"><circle cx="150" cy="105" r="13"/><circle cx="195" cy="100" r="13"/><circle cx="240" cy="105" r="13"/></g><g fill="#f08a24"><rect x="136" y="118" width="28" height="36" rx="8"/><rect x="181" y="113" width="28" height="41" rx="8"/><rect x="226" y="118" width="28" height="36" rx="8"/></g><path d="M95 150H305L280 185H120Z" fill="#e0701a"/></svg><p class="cap">Rescue teams use boats to reach families.</p></div>
+      <div class="pic"><svg viewBox="0 0 400 260" role="img" aria-label="Illustration of people floating a scooter on a raft"><rect width="400" height="260" fill="#cfe3ea"/><path d="M0 110Q100 60 200 100T400 90V150H0Z" fill="#6f9a78"/><circle cx="70" cy="105" r="12" fill="#5b3a29"/><rect x="57" y="117" width="26" height="50" rx="8" fill="#8e5ea2"/><circle cx="330" cy="105" r="12" fill="#5b3a29"/><rect x="317" y="117" width="26" height="50" rx="8" fill="#2a9d8f"/><rect y="150" width="400" height="110" fill="#a98f62" opacity=".92"/><g fill="#c9d99f" stroke="#8aa163"><rect x="105" y="170" width="190" height="14" rx="7"/><rect x="105" y="186" width="190" height="14" rx="7"/></g><circle cx="160" cy="165" r="12" fill="#222"/><circle cx="250" cy="165" r="12" fill="#222"/><path d="M155 160H255L240 120H215L205 140H170Z" fill="#2a6fb0"/></svg><p class="cap">Families float belongings on rafts made of banana trunks.</p></div>
+    </div>
+
+    <h2>What our research found</h2>
+    <div class="grid">
+      <div class="card"><h3>Grade 7 students who got it right</h3><div id="b1"></div></div>
+      <div class="card"><h3>Awareness gaps</h3><div id="b2"></div></div>
+    </div>
+  </div>
+</main>
+
+<!-- ================= SAFETY ================= -->
+<main id="p-safety" class="page">
+  <section class="hero" id="help" style="min-height:240px">
+    <svg viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><use href="#fs"/></svg>
+    <div class="txt"><h1>Need help?<br>You're not alone!</h1><a class="btn" href="tel:112">📞 Call 112</a></div>
+  </section>
+  <div class="waves"></div>
+  <div class="wrap">
+    <h2 id="numbers">Emergency numbers (India)</h2>
+    <div class="grid" id="nums"></div>
+    <p>Tap a number to call. Numbers can change, so confirm them on ndma.gov.in or asdma.gov.in.</p>
+
+    <h2 id="hospitals">Hospital locator</h2>
+    <div class="grid">
+      <div class="card sage">
+        <label for="city"><b>Choose your city (Assam):</b></label><br>
+        <select id="city" onchange="hosp()"></select>
+        <button class="btn" onclick="locate()">📍 Use my location</button>
+        <p id="msg" aria-live="polite"></p>
+        <div id="hl"></div>
+      </div>
+      <div class="card"><iframe id="hmap" title="Hospital map"></iframe><p class="cap">Map positions are approximate. Use Directions to navigate.</p></div>
+    </div>
+
+    <h2 id="steps">Flood safety steps</h2>
+    <div class="grid">
+      <div>
+        <details open><summary>⏪ Before a flood</summary><ol>
+          <li>Find the nearest high ground and relief camp.</li>
+          <li>Pack a waterproof emergency bag (see the checklist).</li>
+          <li>Save emergency numbers in your phone and on paper.</li>
+          <li>Pick a family meeting point.</li></ol></details>
+        <details><summary>🌊 During a flood</summary><ol>
+          <li>Move to higher ground early. Do not wait.</li>
+          <li>Never walk or drive through moving water: 6 inches can knock you down.</li>
+          <li>Switch off the main power and gas if you can reach them safely.</li>
+          <li>Listen to local authorities and the radio.</li></ol></details>
+        <details><summary>⏩ After a flood</summary><ol>
+          <li>Return home only when authorities say it is safe.</li>
+          <li>Stay away from standing water and fallen wires.</li>
+          <li>Drink only boiled or purified water.</li>
+          <li>Never run a generator indoors.</li></ol></details>
+      </div>
+      <div class="card peach kit">
+        <h3>Emergency kit checklist</h3>
+        <div id="kit"></div>
+        <div class="track" style="margin-top:10px"><div class="fill" id="bar" style="width:0"></div></div>
+        <p id="kitN"></p>
+      </div>
+    </div>
+
+    <h2 id="flood-map">Flood map</h2>
+    <p>Red dots are major floods around the world. Blue dots are flood-prone districts in Assam. Zoom and click a dot. This map shows past floods. For <b>live</b> river levels, use the official trackers below.</p>
+    <button class="btn" onclick="go([20,40],2)">🌍 World</button> <button class="btn" onclick="go([26.3,92.9],7)">Assam</button>
+    <div id="map" style="margin-top:10px"></div>
+    <div class="grid" style="margin-top:16px">
+      <div class="card sage"><h3>Latest updates (official)</h3>
+        <p><a href="https://asdma.gov.in" target="_blank" rel="noopener">ASDMA – Assam flood reports</a><br>
+        <a href="https://sites.research.google/floods/" target="_blank" rel="noopener">Google Flood Hub</a><br>
+        <a href="https://gdacs.org" target="_blank" rel="noopener">GDACS – global disaster alerts</a><br>
+        <a href="https://ndma.gov.in" target="_blank" rel="noopener">NDMA – Sachet alert app</a></p></div>
+      <div class="card teal"><h3>Watch</h3><p>See what floods do to families in Assam.</p><a class="btn" href="https://www.youtube.com/results?search_query=Assam+floods+families+homeless" target="_blank" rel="noopener">▶ Watch videos</a></div>
+    </div>
+  </div>
+</main>
+
+<button class="btn sos" onclick="showPage('safety','numbers')" aria-label="Emergency numbers">🆘 SOS</button>
+<footer>Sources: Assam State Disaster Management Authority (2012–2020 data), Indian Express, ScienceDirect, PreventionWeb, PMC, NDMA, Ready.gov, and my own Grade 7 survey. Full MLA citations are in the appendix.</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+
+// ---- Switch between pages (Home / Information / Safety) ----
+function showPage(p, anchor) {
+  document.querySelectorAll('.page').forEach(e => e.classList.toggle('on', e.id == 'p-' + p));
+  document.querySelectorAll('.tab[data-p]').forEach(t => t.classList.toggle('on', t.dataset.p == p));
+  if (p == 'safety') startMap();
+  if (p == 'info') setTimeout(() => document.querySelectorAll('#p-info .fill').forEach(f => f.style.width = f.dataset.w + '%'), 100);
+  anchor ? $(anchor).scrollIntoView() : scrollTo(0, 0);
+}
+$('big').onclick = () => document.body.classList.toggle('big');
+
+// ---- Emergency numbers: [number, who, details] ----
+const N = [['112','All emergencies','Police, fire and health'],['100','Police','Crime and safety'],['101','Fire','Fire brigade'],['102','Ambulance','National ambulance service'],['108','Emergency ambulance','Medical emergencies'],['1070','Disaster relief','Relief for natural calamities'],['1078','Disaster control room','NDMA helpline'],['011-24363260','NDRF','National Disaster Response Force']];
+$('nums').innerHTML = N.map(n => `<a class="num" href="tel:${n[0].replace(/-/g,'')}"><strong>${n[0]}</strong><span><b>${n[1]}</b><br>${n[2]}</span></a>`).join('');
+
+// ---- Hospital locator: [name, city, latitude, longitude] (positions approximate) ----
+const H = [['Gauhati Medical College & Hospital','Guwahati',26.15,91.77],['Mahendra Mohan Choudhury Hospital','Guwahati',26.186,91.74],['Assam Medical College & Hospital','Dibrugarh',27.47,94.9],['Jorhat Medical College & Hospital','Jorhat',26.73,94.18],['Tezpur Medical College & Hospital','Tezpur',26.66,92.78],['Silchar Medical College & Hospital','Silchar',24.78,92.79],['Fakhruddin Ali Ahmed Medical College & Hospital','Barpeta',26.32,91.0],['Lakhimpur Medical College & Hospital','North Lakhimpur',27.23,94.1],['Diphu Medical College & Hospital','Diphu',25.84,93.43],['Dhubri Civil Hospital','Dhubri',26.02,89.98],['Dhemaji Civil Hospital','Dhemaji',27.48,94.58],['Tinsukia Civil Hospital','Tinsukia',27.49,95.36]];
+let me = null;
+$('city').innerHTML = [...new Set(H.map(h => h[1]))].map(c => `<option>${c}</option>`).join('') + '<option value="all">All Assam</option>';
+function km(a, b, c, d) { // distance between two points (haversine formula)
+  const r = x => x * Math.PI / 180, t = Math.sin(r(c - a) / 2) ** 2 + Math.cos(r(a)) * Math.cos(r(c)) * Math.sin(r(d - b) / 2) ** 2;
+  return 12742 * Math.asin(Math.sqrt(t));
+}
+function hosp() {
+  let l = H.map((h, i) => ({h, i, d: me ? km(me[0], me[1], h[2], h[3]) : 0})).filter(x => $('city').value == 'all' || x.h[1] == $('city').value);
+  if (me) l.sort((a, b) => a.d - b.d);
+  l = l.slice(0, 5);
+  $('hl').innerHTML = l.map(x => `<div class="hosp"><b>${x.h[0]}</b><br>${x.h[1]}${me ? ' · ' + x.d.toFixed(0) + ' km away' : ''}<br><button class="btn" onclick="pin(${x.i})">Show on map</button> <a class="btn light" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.h[0] + ' ' + x.h[1])}" target="_blank" rel="noopener">Directions</a></div>`).join('');
+  pin(l[0].i);
+}
+function pin(i) {
+  const h = H[i];
+  $('hmap').src = `https://www.openstreetmap.org/export/embed.html?bbox=${h[3]-.02},${h[2]-.012},${h[3]+.02},${h[2]+.012}&marker=${h[2]},${h[3]}`;
+}
+function locate() {
+  if (!navigator.geolocation) { $('msg').textContent = 'Location is not supported. Please choose your city.'; return; }
+  navigator.geolocation.getCurrentPosition(p => {
+    me = [p.coords.latitude, p.coords.longitude]; $('city').value = 'all'; hosp();
+    $('msg').textContent = 'Showing the 5 hospitals nearest to you.';
+  }, () => $('msg').textContent = 'Could not get your location. Please choose your city.');
+}
+hosp();
+
+// ---- Emergency kit checklist ----
+const kit = ['Clean drinking water + purification tablets','Dry food (chira, biscuits, nuts)','First-aid kit + regular medicines','Torch + spare batteries','Power bank + charged phone','Whistle to signal for help','ID + medical records in a waterproof pouch'];
+$('kit').innerHTML = kit.map(k => `<label><input type="checkbox" onchange="count()">${k}</label>`).join('');
+function count() {
+  const c = document.querySelectorAll('#kit input:checked').length;
+  $('kitN').textContent = c + ' of ' + kit.length + ' packed';
+  $('bar').style.width = c / kit.length * 100 + '%';
+}
+count();
+
+// ---- Quiz: [question, options, correct index, hint, explanation] ----
+const Q = [
+ ['How much fast-moving water can knock an adult off their feet?',['6 inches (15 cm)','1 metre','2 metres','Only water above the head'],0,'It is much less than you think!','Just 6 inches of moving water can knock you down. Never wade through it.'],
+ ['Which number is India\'s single emergency helpline?',['100','112','1098','555'],1,'It covers police, fire and health.','112 connects you to police, fire and health services.'],
+ ['The floodwater looks calm and knee-deep. Should you walk through it?',['Yes, it is shallow','No, it can hide drains, sharp objects, snakes and live wires','Yes, if I wear slippers','Only at night'],1,'You cannot see what is under the water.','Floodwater hides dangers and can carry electric current.'],
+ ['After a flood, which water is safest to drink?',['Tap water straight away','Boiled or purified water','Settled floodwater','Any clear-looking water'],1,'Germs cannot be seen.','Boiling or purifying kills the germs that cause flood diseases.'],
+ ['About how many people did floods affect in Assam each year (ASDMA average, 2012–2020)?',['About 39.5 lakh','About 3,950','About 50,000','About 1 lakh'],0,'It is millions of people.','Around 3.95 million people were affected every year, and about 4.58 lakh stayed in relief camps.']
+];
+let qi = 0, sc = 0, lock = 0;
+function ask() {
+  const b = $('quiz');
+  if (qi == Q.length) {
+    b.innerHTML = `<h3>Your score: ${sc} / ${Q.length}</h3><p>${sc >= 4 ? 'Flood-smart! Share what you learned.' : 'Good start. Read the safety steps and try again.'}</p><button class="btn light" onclick="qi=sc=0;ask()">Try again</button> <button class="btn" onclick="showPage('safety','steps')">Read safety steps</button>`;
+    return;
+  }
+  const q = Q[qi]; lock = 0;
+  b.innerHTML = `<p>Question ${qi + 1} of ${Q.length}</p><h3>${q[0]}</h3>` + q[1].map((o, i) => `<button class="opt" onclick="pick(${i})">${o}</button>`).join('') +
+    `<p id="fb" aria-live="polite"></p><button class="btn" onclick="$('fb').textContent='💡 ${q[3]}'">💡 Hint</button> <button class="btn light" id="nx" hidden onclick="qi++;ask()">Next question</button>`;
+}
+function pick(i) {
+  if (lock) return; lock = 1;
+  const q = Q[qi], o = document.querySelectorAll('.opt');
+  o[q[2]].classList.add('right'); o[q[2]].prepend('✔ ');
+  if (i == q[2]) sc++; else { o[i].classList.add('wrong'); o[i].prepend('✖ '); }
+  $('fb').textContent = q[4]; $('nx').hidden = false;
+}
+ask();
+
+// ---- Bar charts: [label, percent] ----
+function bars(id, d) { $(id).innerHTML = d.map(x => `<p style="margin:10px 0 2px">${x[0]}</p><div class="track"><div class="fill" data-w="${x[1]}">${x[1]}%</div></div>`).join(''); }
+bars('b1', [['Spotted flood "don\'ts"', 35], ['Understood the impact on human lives', 29.4], ['Knew the economic impact on India', 23.4]]);
+bars('b2', [['Kerala: unaware of basic flood safety (Indian Express)', 67], ['Worldwide: feel they can do nothing in a disaster (PreventionWeb)', 43], ['Do not know emergency numbers (ScienceDirect)', 40]]);
+
+// ---- Flood map (Leaflet + OpenStreetMap) ----
+const F = [[27,68.5,'Pakistan, 2022','About a third of the country was under water.'],[10.1,76.4,'Kerala, 2018','The worst floods in about a century.'],[50.5,7,'Germany, 2021','Deadly flash floods in the Ahr valley.'],[32.8,22.6,'Derna, Libya, 2023','Dams collapsed after Storm Daniel.'],[19.1,72.9,'Mumbai, 2005','944 mm of rain fell in 24 hours.'],[24.9,91.9,'Sylhet, Bangladesh, 2022','Millions were stranded.'],[34.8,113.7,'Zhengzhou, China, 2021','Record rain flooded the city.']];
+const A = [[27.5,94.6,'Dhemaji'],[27.2,94.1,'Lakhimpur'],[26.95,94.2,'Majuli'],[27.5,94.9,'Dibrugarh'],[26.3,92.7,'Nagaon'],[26.3,91,'Barpeta'],[26,90,'Dhubri'],[26.15,91.75,'Guwahati']];
+let map;
+function startMap() {
+  if (map) { map.invalidateSize(); return; }
+  if (!window.L) { $('map').textContent = 'The map needs an internet connection. Use the official links below.'; return; }
+  map = L.map('map').setView([20, 40], 2);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '© OpenStreetMap'}).addTo(map);
+  const dot = (p, colour, text) => L.circleMarker([p[0], p[1]], {color: colour, radius: 9, fillOpacity: .8}).addTo(map).bindPopup(text);
+  F.forEach(f => dot(f, '#FA6C5D', `<b>${f[2]}</b><br>${f[3]}`));
+  A.forEach(a => dot(a, '#0E4C92', `<b>${a[2]}</b><br>Flood-prone district in the Brahmaputra valley`));
+}
+function go(centre, zoom) { if (map) map.setView(centre, zoom); }
+</script>
+</body>
 </html>
