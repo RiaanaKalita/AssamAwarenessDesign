@@ -369,32 +369,16 @@ const N = [['112','All emergencies','Police, fire and health'],['100','Police','
 $('nums').innerHTML = N.map(n => `<a class="num" href="tel:${n[0].replace(/-/g,'')}"><strong>${n[0]}</strong><span><b>${n[1]}</b><br>${n[2]}</span></a>`).join('');
 
 // ---- Hospital locator: [name, city, latitude, longitude] (positions approximate) ----
-const H = [['Gauhati Medical College & Hospital','Guwahati',26.15,91.77],['Mahendra Mohan Choudhury Hospital','Guwahati',26.186,91.74],['Assam Medical College & Hospital','Dibrugarh',27.47,94.9],['Jorhat Medical College & Hospital','Jorhat',26.73,94.18],['Tezpur Medical College & Hospital','Tezpur',26.66,92.78],['Silchar Medical College & Hospital','Silchar',24.78,92.79],['Fakhruddin Ali Ahmed Medical College & Hospital','Barpeta',26.32,91.0],['Lakhimpur Medical College & Hospital','North Lakhimpur',27.23,94.1],['Diphu Medical College & Hospital','Diphu',25.84,93.43],['Dhubri Civil Hospital','Dhubri',26.02,89.98],['Dhemaji Civil Hospital','Dhemaji',27.48,94.58],['Tinsukia Civil Hospital','Tinsukia',27.49,95.36]];
-let me = null;
-$('city').innerHTML = [...new Set(H.map(h => h[1]))].map(c => `<option>${c}</option>`).join('') + '<option value="all">All Assam</option>';
-function km(a, b, c, d) { // distance between two points (haversine formula)
-  const r = x => x * Math.PI / 180, t = Math.sin(r(c - a) / 2) ** 2 + Math.cos(r(a)) * Math.cos(r(c)) * Math.sin(r(d - b) / 2) ** 2;
-  return 12742 * Math.asin(Math.sqrt(t));
-}
-function hosp() {
-  let l = H.map((h, i) => ({h, i, d: me ? km(me[0], me[1], h[2], h[3]) : 0})).filter(x => $('city').value == 'all' || x.h[1] == $('city').value);
-  if (me) l.sort((a, b) => a.d - b.d);
-  l = l.slice(0, 5);
-  $('hl').innerHTML = l.map(x => `<div class="hosp"><b>${x.h[0]}</b><br>${x.h[1]}${me ? ' · ' + x.d.toFixed(0) + ' km away' : ''}<br><button class="btn" onclick="pin(${x.i})">Show on map</button> <a class="btn light" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(x.h[0] + ' ' + x.h[1])}" target="_blank" rel="noopener">Directions</a></div>`).join('');
-  pin(l[0].i);
-}
-function pin(i) {
-  const h = H[i];
-  $('hmap').src = `https://www.openstreetmap.org/export/embed.html?bbox=${h[3]-.02},${h[2]-.012},${h[3]+.02},${h[2]+.012}&marker=${h[2]},${h[3]}`;
-}
-function locate() {
-  if (!navigator.geolocation) { $('msg').textContent = 'Location is not supported. Please choose your city.'; return; }
-  navigator.geolocation.getCurrentPosition(p => {
-    me = [p.coords.latitude, p.coords.longitude]; $('city').value = 'all'; hosp();
-    $('msg').textContent = 'Showing the 5 hospitals nearest to you.';
-  }, () => $('msg').textContent = 'Could not get your location. Please choose your city.');
-}
-hosp();
+
+    <title>Hospital Locator Gateway</title>
+</head>
+<body style="margin: 0; padding: 0; overflow: hidden;">
+    <iframe id="hmap" 
+            src="https://www.generalicentralinsurance.com/hospital-locator" 
+            style="width: 100vw; height: 100vh; border: none;" 
+            allow="geolocation">
+    </iframe>
+
 
 // ---- Emergency kit checklist ----
 const kit = ['Clean drinking water + purification tablets','Dry food (chira, biscuits, nuts)','First-aid kit + regular medicines','Torch + spare batteries','Power bank + charged phone','Whistle to signal for help','ID + medical records in a waterproof pouch'];
